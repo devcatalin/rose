@@ -3,14 +3,14 @@
 # --- System basics ---
 timezone: Europe/Madrid
 ssh_pwauth: false # disable SSH password logins
-disable_root: true # disallow root SSH
+disable_root: false # allow root SSH for debugging (disable manually later)
 
 # --- Packages & upgrades ---
 package_update: true
 package_upgrade: true
 packages:
   - docker.io
-  - docker-compose-plugin
+  - docker-compose-v2
   - ufw
   - unattended-upgrades
   - fail2ban
@@ -19,11 +19,8 @@ packages:
 users:
   - name: deploy
     shell: /bin/bash
-    groups: [docker]
-    sudo:
-      [
-        "ALL=(ALL) NOPASSWD: /usr/bin/ip, /usr/bin/systemctl restart systemd-networkd",
-      ]
+    groups: [docker, sudo]
+    sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElnzNQbVQgachgIZSQ2f96Z+7GM0TF42vPIbWaUse6q deploy_vps_key
 
@@ -63,3 +60,6 @@ runcmd:
 
   # Enable unattended upgrades
   - systemctl enable --now unattended-upgrades
+
+  # Log completion
+  - echo "✅ Cloud-init complete at $(date)" >> /var/log/cloud-init-completion.log
