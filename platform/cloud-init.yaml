@@ -56,7 +56,7 @@ runcmd:
   - ln -sf /srv/rose/platform /srv/platform
 
   # Initial docker compose up
-  - cd /srv/platform && docker compose up -d
+  - bash -lc 'cd /srv/platform && [ -f .env ] && docker compose up -d'
 
   # Enable unattended upgrades
   - systemctl enable --now unattended-upgrades

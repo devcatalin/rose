@@ -86,3 +86,26 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+
+  dozzle:
+    image: amir20/dozzle:v7.4.7
+    container_name: dozzle
+    restart: unless-stopped
+    networks:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dozzle.rule=Host(`logs.devcatalin.com`)"
+      - "traefik.http.routers.dozzle.entrypoints=websecure"
+      - "traefik.http.routers.dozzle.tls.certresolver=myresolver"
+      - "traefik.http.routers.dozzle.middlewares=dozzle-auth"
+      - "traefik.http.middlewares.dozzle-auth.basicauth.removeheader=true"
+      - "traefik.http.middlewares.dozzle-auth.basicauth.users=${LOGS_PASSWORD_HASH}"
+      - "traefik.http.services.dozzle.loadbalancer.server.port=8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
