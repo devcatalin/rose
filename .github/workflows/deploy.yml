@@ -24,12 +24,12 @@ jobs:
       - name: Pull Docker images
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-            "cd /srv/platform && docker compose pull"
+            "cd /srv/platform && docker-compose pull"
 
       - name: Deploy with Docker Compose
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-            "cd /srv/platform && docker compose up -d --remove-orphans"
+            "cd /srv/platform && docker-compose up -d --remove-orphans"
 
       - name: Verify deployment
         run: |
