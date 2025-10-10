@@ -1,0 +1,5 @@
+# Dynamic Traefik Configuration
+
+This directory is for optional dynamic Traefik configuration files (YAML or TOML).
+
+Currently empty - configuration is handled via Docker labels and CLI flags.

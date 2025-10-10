@@ -1,0 +1,1 @@
+Always begin by reading **GOAL.md** end-to-end. It is the single source of truth for requirements, structure, and acceptance criteria. Execute the plan exactly as specified, updating only the **Progress Log** and checklists inside GOAL.md. Do **not** create additional markdown files.

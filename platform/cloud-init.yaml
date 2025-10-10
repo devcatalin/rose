@@ -1,0 +1,46 @@
+#cloud-config
+
+# --- System basics ---
+timezone: Europe/Madrid
+ssh_pwauth: false # disable SSH password logins
+disable_root: true # disallow root SSH
+
+# --- Packages & upgrades ---
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io
+  - docker-compose-plugin
+  - ufw
+  - unattended-upgrades
+  - fail2ban
+
+# --- User ---
+users:
+  - name: deploy
+    shell: /bin/bash
+    groups: [docker]
+    sudo: [] # no sudo privileges
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElnzNQbVQgachgIZSQ2f96Z+7GM0TF42vPIbWaUse6q deploy_vps_key
+
+# --- First-boot commands (idempotent) ---
+runcmd:
+  # Firewall
+  - ufw allow OpenSSH
+  - ufw allow 80/tcp
+  - ufw allow 443/tcp
+  - ufw --force enable
+
+  # Docker service
+  - systemctl enable --now docker
+
+  # Traefik cert store & app dir
+  - mkdir -p /srv/platform
+  - mkdir -p /var/lib/traefik/acme
+  - touch /var/lib/traefik/acme/acme.json
+  - chmod 600 /var/lib/traefik/acme/acme.json
+  - chown -R deploy:deploy /srv/platform /var/lib/traefik/acme
+
+  # Enable unattended upgrades
+  - systemctl enable --now unattended-upgrades

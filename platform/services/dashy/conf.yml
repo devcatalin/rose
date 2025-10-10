@@ -1,0 +1,50 @@
+---
+# Dashy Configuration
+pageInfo:
+  title: Dev Hub
+  description: Personal development hub
+  navLinks:
+    - title: GitHub
+      path: https://github.com/devcatalin
+
+appConfig:
+  theme: nord
+  layout: auto
+  iconSize: medium
+  language: en
+  startingView: default
+  defaultOpeningMethod: newtab
+  statusCheck: true
+  statusCheckInterval: 60
+  faviconApi: allesedv
+  routingMode: history
+  enableMultiTasking: false
+  webSearch:
+    disableWebSearch: false
+    searchEngine: duckduckgo
+    openingMethod: newtab
+  hideComponents:
+    hideHeading: false
+    hideNav: false
+    hideSearch: false
+    hideSettings: false
+    hideFooter: false
+
+sections:
+  - name: Development
+    icon: fas fa-code
+    items:
+      - title: GitHub
+        description: Source code repositories
+        icon: fab fa-github
+        url: https://github.com/devcatalin
+        target: newtab
+
+  - name: Infrastructure
+    icon: fas fa-server
+    items:
+      - title: Hetzner Cloud
+        description: VPS hosting
+        icon: fas fa-cloud
+        url: https://console.hetzner.cloud/
+        target: newtab
