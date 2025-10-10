@@ -14,22 +14,22 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H hub.devcatalin.com >> ~/.ssh/known_hosts
 
       - name: Pull latest from GitHub
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
+          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com \
             "cd /srv/rose && git fetch origin main && git reset --hard origin/main"
 
       - name: Pull Docker images
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-            "cd /srv/platform && docker-compose pull"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com \
+            "cd /srv/platform && docker compose pull"
 
       - name: Deploy with Docker Compose
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-            "cd /srv/platform && docker-compose up -d --remove-orphans"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com \
+            "cd /srv/platform && docker compose up -d --remove-orphans"
 
       - name: Verify deployment
         run: |
@@ -39,7 +39,7 @@ jobs:
             echo "✅ Deployment successful - HTTP $RESPONSE"
           else
             echo "❌ Deployment verification failed - HTTP $RESPONSE"
-            ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker ps"
-            ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker logs traefik --tail 50"
+            ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com "docker ps"
+            ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com "docker logs traefik --tail 50"
             exit 1
           fi
