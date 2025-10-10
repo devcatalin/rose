@@ -13,30 +13,50 @@ This repository contains the infrastructure-as-code for **hub.devcatalin.com**, 
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Initial Setup
 
-1. **VPS Requirements:**
+1. **Generate Deploy Key:**
 
-   - Ubuntu LTS with Docker & Docker Compose installed
-   - Ports 80 and 443 open
-   - SSH access configured
+   ```bash
+   ssh-keygen -t ed25519 -f ~/.ssh/rose_repo_deploy -C "rose-repo-deploy" -N ""
+   ```
 
-2. **DNS Configuration:**
+   Add the public key (`~/.ssh/rose_repo_deploy.pub`) as a read-only Deploy Key in GitHub.
 
-   - Point `hub.devcatalin.com` A/AAAA records to your VPS IP
+2. **Configure Secrets:**
+   Set these in your GitHub repository settings:
 
-3. **GitHub Secrets:**
-   Configure these in your repository settings:
-   - `VPS_HOST` - Your VPS IP or hostname
-   - `VPS_USER` - SSH username (e.g., `root`)
-   - `VPS_SSH_KEY` - Private SSH key in PEM format
+   - `VPS_HOST` - Your VPS floating IP (e.g., `168.119.152.6`)
+   - `VPS_USER` - SSH username (e.g., `deploy`)
+   - `VPS_SSH_KEY` - Private SSH key for VPS access
 
-### Deployment
+3. **DNS Configuration:**
+   Point `hub.devcatalin.com` A/AAAA records to your VPS floating IP
+
+### Provisioning a New VPS
+
+Use the included script to create and configure a fresh VPS:
+
+```bash
+cd platform/scripts
+./create_vps.sh
+```
+
+This script:
+
+- Creates a Hetzner VPS with cloud-init configuration
+- Installs Docker, configures firewall, creates the `deploy` user
+- Copies the repo deploy key to the VPS
+- Clones this repository and starts all services automatically
+
+The VPS is fully operational within ~2 minutes of creation.
+
+### Continuous Deployment
 
 Simply push to the `main` branch - GitHub Actions will automatically:
 
-1. Sync the `platform/` directory to `/srv/platform` on the VPS
-2. Pull Docker images
+1. Pull the latest code on the VPS via git
+2. Pull updated Docker images
 3. Deploy services with zero-downtime
 4. Verify the deployment
 
@@ -47,7 +67,9 @@ First deployment typically takes 1-2 minutes for Let's Encrypt certificate issua
 ```
 .github/workflows/deploy.yml      # CI/CD workflow
 platform/
+  cloud-init.yaml                 # VPS provisioning configuration
   docker-compose.yml              # Service definitions
+  scripts/create_vps.sh           # VPS creation script
   traefik/dynamic/                # Dynamic Traefik config (optional)
   services/dashy/conf.yml         # Dashy dashboard configuration
 ```

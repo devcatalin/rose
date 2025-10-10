@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -19,19 +16,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Create platform directory on VPS
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /srv/platform"
-
-      - name: Sync platform directory to VPS
-        run: |
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa" \
-            platform/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/srv/platform/
-
-      - name: Ensure Traefik cert directory exists
+      - name: Pull latest from GitHub
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-            "mkdir -p /var/lib/traefik/acme && touch /var/lib/traefik/acme/acme.json && chmod 600 /var/lib/traefik/acme/acme.json"
+            "cd /srv/rose && git fetch origin main && git reset --hard origin/main"
 
       - name: Pull Docker images
         run: |

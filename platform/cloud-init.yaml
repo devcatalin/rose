@@ -20,7 +20,10 @@ users:
   - name: deploy
     shell: /bin/bash
     groups: [docker]
-    sudo: [] # no sudo privileges
+    sudo:
+      [
+        "ALL=(ALL) NOPASSWD: /usr/bin/ip, /usr/bin/systemctl restart systemd-networkd",
+      ]
     ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElnzNQbVQgachgIZSQ2f96Z+7GM0TF42vPIbWaUse6q deploy_vps_key
 
@@ -36,11 +39,27 @@ runcmd:
   - systemctl enable --now docker
 
   # Traefik cert store & app dir
-  - mkdir -p /srv/platform
+  - mkdir -p /srv/rose
   - mkdir -p /var/lib/traefik/acme
   - touch /var/lib/traefik/acme/acme.json
   - chmod 600 /var/lib/traefik/acme/acme.json
-  - chown -R deploy:deploy /srv/platform /var/lib/traefik/acme
+  - chown -R deploy:deploy /srv/rose /var/lib/traefik/acme
+
+  # Setup SSH for deploy user
+  - mkdir -p /home/deploy/.ssh
+  - chmod 700 /home/deploy/.ssh
+  - chown deploy:deploy /home/deploy/.ssh
+  - ssh-keyscan github.com >> /home/deploy/.ssh/known_hosts 2>/dev/null
+  - chown deploy:deploy /home/deploy/.ssh/known_hosts
+
+  # Clone repo (will use deploy key copied by create_vps.sh)
+  - sudo -u deploy git clone git@github.com:devcatalin/rose.git /srv/rose || true
+
+  # Symlink platform directory
+  - ln -sf /srv/rose/platform /srv/platform
+
+  # Initial docker compose up
+  - cd /srv/platform && docker compose up -d
 
   # Enable unattended upgrades
   - systemctl enable --now unattended-upgrades

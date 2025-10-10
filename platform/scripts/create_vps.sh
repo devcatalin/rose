@@ -15,6 +15,8 @@ SSH_KEY_NAME="default"              # Name of SSH key in Hetzner project
 CLOUD_INIT_FILE="platform/cloud-init.yaml"
 HCLOUD_TOKEN_FILE="$HOME/.config/hcloud_token"
 FLOATING_IP_NAME="hub-ip"           # Existing floating IP in Hetzner Cloud
+REPO_DEPLOY_KEY="$HOME/.ssh/rose_repo_deploy"  # Private key for git clone
+VPS_SSH_KEY="$HOME/.ssh/deploy_vps_key"        # SSH key to connect to VPS
 # ========================
 
 command -v hcloud >/dev/null 2>&1 || { echo "❌ Missing 'hcloud' CLI"; exit 1; }
@@ -63,5 +65,39 @@ done
 echo "==> Assigning floating IP '$FLOATING_IP_NAME' → '$NAME'..."
 hcloud floating-ip assign "$FLOATING_IP_NAME" "$SERVER_ID" >/dev/null
 
+# Get the server's main IP for initial connection
+MAIN_IP="$(echo "$CREATE_JSON" | jq -r '.server.public_net.ipv4.ip')"
+echo "==> Server main IP: $MAIN_IP, floating IP: $FIP_ADDR"
+
+echo "==> Waiting for cloud-init to complete (60s)..."
+sleep 60
+
+echo "==> Configuring floating IP on network interface..."
+ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "root@$MAIN_IP" \
+  "ip addr add $FIP_ADDR/32 dev eth0 2>/dev/null || true && \
+   ip route add $FIP_ADDR dev eth0 2>/dev/null || true"
+
+# Persist the floating IP configuration for reboots
+ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "root@$MAIN_IP" \
+  "cat > /etc/systemd/network/60-floating-ip.network <<EOF
+[Match]
+Name=eth0
+
+[Network]
+Address=$FIP_ADDR/32
+EOF
+systemctl restart systemd-networkd"
+
+echo "==> Waiting for floating IP to become active (5s)..."
+sleep 5
+
+echo "==> Copying repo deploy key to VPS..."
+scp -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
+  "$REPO_DEPLOY_KEY" "deploy@$FIP_ADDR:/home/deploy/.ssh/id_ed25519"
+
+echo "==> Setting permissions on deploy key..."
+ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$FIP_ADDR" \
+  "chmod 600 /home/deploy/.ssh/id_ed25519"
+
 echo "✅ Done: $NAME is up and has floating IP $FIP_ADDR"
-echo "👉 SSH with: ssh deploy@$FIP_ADDR"
+echo "👉 SSH with: ssh -i $VPS_SSH_KEY deploy@$FIP_ADDR"

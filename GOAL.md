@@ -130,3 +130,28 @@ _(Agent appends short, timestamped entries here. Do not create other markdown fi
 - Verify DNS A/AAAA records point to VPS IP
 - Ensure VPS has Docker + Compose installed, ports 80/443 open
 - Push to `main` branch to trigger first deployment
+
+### 2025-10-10 - Simplified GitOps Flow with Cloud-Init
+
+**Restructured for VPS reprovisioning:**
+
+- Added repo deploy key (`~/.ssh/rose_repo_deploy`) for private GitHub access
+- Enhanced `cloud-init.yaml` to:
+  - Set up `/home/deploy/.ssh` with GitHub known_hosts
+  - Clone repo to `/srv/rose` on first boot
+  - Symlink `/srv/platform → /srv/rose/platform`
+  - Run initial `docker compose up -d` automatically
+- Updated `create_vps.sh` to:
+  - Copy repo deploy key to VPS after provisioning
+  - Wait for cloud-init completion before deployment
+- Simplified `.github/workflows/deploy.yml`:
+  - Removed rsync and manual directory creation
+  - Uses `git fetch/reset` to pull latest code
+  - Reduced from 8 steps to 4 steps
+
+**Key benefits:**
+
+- VPS is fully operational immediately after `create_vps.sh` completes
+- No manual SSH directory setup or cert directory creation in CI
+- Git is the single source of truth; rsync eliminated
+- Reprovisioning the VPS is now a single script execution
