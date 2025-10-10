@@ -7,7 +7,7 @@ networks:
 
 services:
   traefik:
-    image: traefik:v2.11.0
+    image: traefik:latest
     container_name: traefik
     restart: unless-stopped
     networks:
@@ -54,7 +54,7 @@ services:
       start_period: 10s
 
   dashy:
-    image: lissy93/dashy:2.1.2
+    image: lissy93/dashy:latest
     container_name: dashy
     restart: unless-stopped
     networks:
@@ -88,7 +88,7 @@ services:
       start_period: 30s
 
   dozzle:
-    image: amir20/dozzle:v7.4.7
+    image: amir20/dozzle:latest
     container_name: dozzle
     restart: unless-stopped
     networks:
