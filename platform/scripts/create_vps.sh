@@ -1,23 +1,7 @@
 #!/usr/bin/env bash
 # platform/scripts/create_vps.sh
 # Recreate a Hetzner VPS (CPX11) with platform/cloud-init.yaml
-# Assign the floating IP "hub-ipecho ""
-echo "✅ Done: $NAME is up and has floating IP $FIP_ADDR"
-echo ""
-echo "📋 Server Details:"
-echo "   • Server ID: $SERVER_ID"
-echo "   • Main IP: $MAIN_IP"
-echo "   • Floating IP: $FIP_ADDR"
-echo ""
-echo "🔗 Access:"
-echo "   • Deploy user: ssh -i $VPS_SSH_KEY deploy@$FIP_ADDR"
-echo "   • Root user:   ssh -i $VPS_SSH_KEY root@$FIP_ADDR"
-echo "   • Or via main IP: ssh -i $VPS_SSH_KEY deploy@$MAIN_IP"
-echo ""
-echo "🐳 Docker Services:"
-ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'" 2>/dev/null || echo "   (Could not retrieve container status)"utput for reliability.
-
+# Assign the floating IP "hub-ip", using JSON outpecho ""
 set -euo pipefail
 trap 'echo "❌ Error on line $LINENO" >&2' ERR
 
@@ -117,19 +101,36 @@ ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
   "sudo ip addr add $FIP_ADDR/32 dev eth0 2>/dev/null || true && \
    sudo ip route add $FIP_ADDR dev eth0 2>/dev/null || true" && echo -n "."
 
-# Persist the floating IP configuration for reboots
+# Create a persistent script for floating IP configuration
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "sudo tee /etc/systemd/network/60-floating-ip.network > /dev/null <<EOF
-[Match]
-Name=eth0
+  "sudo tee /etc/init.d/configure-floating-ip > /dev/null <<'EOF'
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          configure-floating-ip
+# Required-Start:    \$network
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      
+# Short-Description: Configure floating IP
+### END INIT INFO
 
-[Network]
-Address=$FIP_ADDR/32
-EOF
-" && echo -n "."
+case \"\$1\" in
+  start)
+    ip addr add $FIP_ADDR/32 dev eth0 2>/dev/null || true
+    ip route add $FIP_ADDR dev eth0 2>/dev/null || true
+    ;;
+  stop)
+    ;;
+  *)
+    exit 1
+    ;;
+esac
+exit 0
+EOF" && echo -n "."
 
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "sudo systemctl restart systemd-networkd" && echo " ✓"
+  "sudo chmod +x /etc/init.d/configure-floating-ip && \
+   sudo update-rc.d configure-floating-ip defaults" && echo " ✓"
 
 echo -n "==> Copying repo deploy key to VPS"
 scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
@@ -151,12 +152,13 @@ ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
   }
 
 echo -n "==> Testing floating IP connectivity"
-for i in {1..10}; do
+for i in {1..15}; do
   if ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "deploy@$FIP_ADDR" exit 2>/dev/null; then
     echo " ✓ (${i}s)"
+    FIP_WORKING=true
     break
   fi
-  [[ $i -eq 10 ]] && { echo " ⚠️  (floating IP may not be fully active yet)"; }
+  [[ $i -eq 15 ]] && { echo " ⚠️  (floating IP may need more time)"; FIP_WORKING=false; }
   echo -n "."
   sleep 1
 done
