@@ -24,6 +24,8 @@ services:
       - --global.sendAnonymousUsage=false
       # API and Dashboard (disabled)
       - --api.dashboard=false
+      # Ping endpoint for healthcheck
+      - --ping=true
       # Docker provider
       - --providers.docker=true
       - --providers.docker.network=web
@@ -67,8 +69,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.dashy.rule=Host(`hub.devcatalin.com`)"
       - "traefik.http.routers.dashy.entrypoints=websecure"
+      - "traefik.http.routers.dashy.tls=true"
       - "traefik.http.routers.dashy.tls.certresolver=myresolver"
-      - "traefik.http.services.dashy.loadbalancer.server.port=80"
+      - "traefik.http.services.dashy.loadbalancer.server.port=8080"
     logging:
       driver: "json-file"
       options:
@@ -80,7 +83,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "require('http').get('http://localhost:80', (r) => {process.exit(r.statusCode === 200 ? 0 : 1);})",
+          "require('http').get('http://localhost:8080', (r) => {process.exit(r.statusCode === 200 ? 0 : 1);})",
         ]
       interval: 30s
       timeout: 10s
