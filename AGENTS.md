@@ -54,10 +54,37 @@ Essential non-obvious context for working with this infrastructure. File content
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245
 ```
 
+**Provisioning Architecture:**
+
+The provisioning process is split into three clear stages:
+
+1. **`platform/cloud-init.yaml`**: System-level setup only
+
+   - Runs automatically on VPS first boot via Hetzner's user-data mechanism
+   - Configures: firewall, users, packages, directories, SSH setup
+   - Does NOT clone repo or start services (no deploy key available yet)
+   - Logs completion to `/var/log/cloud-init-completion.log`
+
+2. **`platform/scripts/bootstrap.sh`**: Application setup
+
+   - Copied to VPS by `create_vps.sh` after cloud-init completes
+   - Clones the repository using deploy key
+   - Starts docker compose services
+   - Idempotent - can be re-run safely
+
+3. **`platform/scripts/create_vps.sh`**: Orchestration
+   - Creates VPS with cloud-init.yaml as user-data
+   - Waits for cloud-init to complete
+   - Copies deploy key + bootstrap.sh to VPS
+   - Runs bootstrap.sh to clone repo and start services
+   - Configures floating IP networking
+
+**Key Insight:** Cloud-init cannot clone the repo because the deploy key (`~/.ssh/rose_repo_deploy`) only exists on the local machine and must be copied by the provisioning script. This is why application setup is separated into `bootstrap.sh`.
+
 **Cloud-Init Templating:**
 
 - Uses Hetzner's `docker-ce` app image with Docker pre-installed
-- `platform/cloud-init.yaml` configures firewall, users, and services
+- Passed via `--user-data-from-file` flag in `hcloud server create`
 - No Docker installation needed - comes ready in the image
 
 **GitHub Secrets Required:**
@@ -136,14 +163,26 @@ docker compose config  # Should output valid YAML
 ### Debug Cloud-Init
 
 ```bash
-# Full output log
+# Full output log (shows all cloud-init execution including errors)
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cat /var/log/cloud-init-output.log"
+
+# Check if cloud-init completed successfully
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /var/log/cloud-init-completion.log"
+# Should show: "✅ Cloud-init complete at [timestamp]"
 
 # Status summary
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cloud-init status --long"
 
-# Retry log (if Docker install had issues)
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /var/log/cloud-init-rose.log"
+# Check what cloud-init actually received as user-data
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cat /var/lib/cloud/instance/user-data.txt"
+```
+
+### Test Bootstrap Script
+
+```bash
+# Copy and run bootstrap script manually
+scp -i ~/.ssh/deploy_vps_key platform/scripts/bootstrap.sh deploy@49.12.112.245:/tmp/test-bootstrap.sh
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "chmod +x /tmp/test-bootstrap.sh && /tmp/test-bootstrap.sh"
 ```
 
 ### Check Network Config
