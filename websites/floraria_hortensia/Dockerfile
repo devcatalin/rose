@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --quiet
+RUN npm install --quiet
 
 # Copy source code
 COPY . .
