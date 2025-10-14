@@ -44,7 +44,7 @@ Essential non-obvious context for working with this infrastructure. File content
 **Key File Locations on VPS:**
 
 - Repository: `/srv/rose`
-- Platform symlink: `/srv/platform` → `/srv/rose/platform`
+- Platform directory: `/srv/rose/platform`
 - Traefik certs: `/var/lib/traefik/acme/acme.json` (persisted)
 - Deploy key: `/home/deploy/.ssh/id_ed25519`
 
@@ -122,7 +122,7 @@ ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker logs traefik --tail 50
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker logs dashy --tail 50"
 
 # Service status
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose ps"
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/rose/platform && docker compose ps"
 ```
 
 ### Test HTTPS
@@ -210,7 +210,7 @@ Reprovisioning takes 2-3 minutes and destroys the current VPS. Always validate y
 
    ```bash
    # Example: Testing a docker compose change
-   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose up -d new-service"
+   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/rose/platform && docker compose up -d new-service"
 
    # Example: Testing a firewall rule
    ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo ufw allow 8080/tcp"
@@ -245,13 +245,13 @@ ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker ps"
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker logs <service> --tail 50"
 
 # Check service status
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose ps"
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/rose/platform && docker compose ps"
 
 # Restart a service
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose restart <service>"
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/rose/platform && docker compose restart <service>"
 
 # Apply docker compose changes
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose up -d"
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/rose/platform && docker compose up -d"
 
 # Check cloud-init status
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cloud-init status --long"

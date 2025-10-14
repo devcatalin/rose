@@ -29,15 +29,9 @@ else
   }
 fi
 
-# Ensure symlink exists
-if [[ ! -L /srv/platform ]]; then
-  ln -sf /srv/rose/platform /srv/platform
-  echo "✓ Platform symlink created"
-fi
-
 # Start docker services
 echo "==> Starting docker services..."
-cd /srv/platform
+cd /srv/rose/platform
 docker compose up -d 2>&1 || {
   echo "❌ Failed to start docker services"
   exit 1
