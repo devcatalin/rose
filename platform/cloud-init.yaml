@@ -44,15 +44,6 @@ runcmd:
   - ssh-keyscan github.com >> /home/deploy/.ssh/known_hosts 2>/dev/null
   - chown deploy:deploy /home/deploy/.ssh/known_hosts
 
-  # Clone repo (will use deploy key copied by create_vps.sh)
-  - sudo -u deploy git clone git@github.com:devcatalin/rose.git /srv/rose || true
-
-  # Symlink platform directory
-  - ln -sf /srv/rose/platform /srv/platform
-
-  # Initial docker compose up
-  - cd /srv/platform && docker compose up -d
-
   # Enable unattended upgrades
   - systemctl enable --now unattended-upgrades
 

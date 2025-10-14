@@ -132,23 +132,21 @@ ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
   "sudo chmod +x /etc/init.d/configure-floating-ip && \
    sudo update-rc.d configure-floating-ip defaults" && echo " ✓"
 
-echo -n "==> Copying repo deploy key to VPS"
+echo -n "==> Copying deploy key and bootstrap script to VPS"
 scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
   "$REPO_DEPLOY_KEY" "deploy@$MAIN_IP:/home/deploy/.ssh/id_ed25519" && echo -n "."
 
-ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "chmod 600 /home/deploy/.ssh/id_ed25519" && echo " ✓"
+scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
+  "platform/scripts/bootstrap.sh" "deploy@$MAIN_IP:/home/deploy/bootstrap.sh" && echo -n "."
 
-echo -n "==> Cloning repository"
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "cd /srv/rose && git clone git@github.com:devcatalin/rose.git . 2>&1 | grep -v 'Cloning into' || true" && echo " ✓"
+  "chmod +x /home/deploy/bootstrap.sh" && echo " ✓"
 
-echo -n "==> Starting docker services"
+echo "==> Running bootstrap script..."
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "cd /srv/platform && docker compose up -d 2>&1" > /tmp/docker_compose_output.log && echo " ✓" || {
-    echo " ⚠️"
-    echo "Docker compose output:"
-    cat /tmp/docker_compose_output.log
+  "/home/deploy/bootstrap.sh" 2>&1 || {
+    echo "❌ Bootstrap script failed"
+    exit 1
   }
 
 echo -n "==> Testing floating IP connectivity"
