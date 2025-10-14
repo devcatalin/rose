@@ -157,128 +157,74 @@ ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ip addr show eth0 | grep inet
 ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /etc/systemd/network/60-floating-ip.network"
 ```
 
-## 🔥 Common Issues & Solutions
+## 🤖 AI Agent Workflow
 
-### Docker Not Available
+**CRITICAL: Always test changes manually on VPS before reprovisioning!**
 
-**Symptom:** `docker: command not found` when `create_vps.sh` runs
+Reprovisioning takes 2-3 minutes and destroys the current VPS. Always validate your changes work by running commands directly on the VPS first.
 
-**Cause:** Hetzner's docker-ce image failed to deploy properly (very rare)
+### Workflow for Making Infrastructure Changes
 
-**Solution:**
+1. **Make changes locally** to config files (`cloud-init.yaml`, `docker-compose.yml`, etc.)
 
-```bash
-# Check if Docker service is running
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo systemctl status docker"
+2. **Test changes manually on VPS** by running the equivalent commands:
 
-# Check Docker version (should be pre-installed)
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker --version"
+   ```bash
+   # Example: Testing a docker compose change
+   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose up -d new-service"
 
-# If missing, the image may not be docker-ce - check with:
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /etc/os-release"
-```
+   # Example: Testing a firewall rule
+   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo ufw allow 8080/tcp"
 
-### Floating IP Not Reachable
+   # Example: Testing a file change
+   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat > /tmp/test-config.yml << 'EOF'
+   # your config here
+   EOF"
+   ```
 
-**Symptom:** SSH works on main IP but not 49.12.112.245
+3. **Verify the changes work** by checking logs, testing endpoints, etc.
 
-**Cause:** systemd-networkd hasn't bound the floating IP to eth0
+4. **Only then ask the user to reprovision** with the validated changes
 
-**Solution:**
+5. **After user confirms reprovisioning**, verify the automated setup works:
+   ```bash
+   # Check services came up correctly
+   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker ps"
+   ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker logs <service> --tail 20"
+   ```
 
-```bash
-# Get main IP from Hetzner or create_vps.sh output
-MAIN_IP="168.119.152.6"  # example
-
-# Check interface config
-ssh -i ~/.ssh/deploy_vps_key deploy@$MAIN_IP "ip addr show eth0"
-
-# Verify systemd-networkd file exists
-ssh -i ~/.ssh/deploy_vps_key deploy@$MAIN_IP "cat /etc/systemd/network/60-floating-ip.network"
-
-# Restart network if needed
-ssh -i ~/.ssh/deploy_vps_key deploy@$MAIN_IP "sudo systemctl restart systemd-networkd"
-```
-
-### Let's Encrypt Fails
-
-**Symptom:** HTTPS not working, Traefik shows ACME errors
-
-**Cause:** DNS not resolving to 49.12.112.245, or ports blocked
-
-**Solution:**
+### Essential VPS Commands
 
 ```bash
-# Verify DNS
-dig +short hub.devcatalin.com
-# Must return: 49.12.112.245
+# Run any command on VPS
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "<command>"
 
-# Check Traefik ACME logs
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker logs traefik 2>&1 | grep -i acme"
+# Check running containers
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker ps"
 
-# Test from outside (should not timeout)
-curl -I http://hub.devcatalin.com
+# View service logs
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker logs <service> --tail 50"
+
+# Check service status
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose ps"
+
+# Restart a service
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose restart <service>"
+
+# Apply docker compose changes
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/platform && docker compose up -d"
+
+# Check cloud-init status
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cloud-init status --long"
+
+# View cloud-init logs
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cat /var/log/cloud-init-output.log"
+
+# Check system resources
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "df -h"
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "free -h"
+
+# Check network connectivity
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ip addr show eth0"
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "curl -I https://hub.devcatalin.com"
 ```
-
-### GitHub Actions Fails
-
-**Symptom:** CI can't pull repo or run docker commands
-
-**Cause:** Deploy key missing or wrong permissions
-
-**Solution:**
-
-```bash
-# Verify deploy key
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ls -la ~/.ssh/id_ed25519"
-
-# Test GitHub SSH
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ssh -T git@github.com"
-# Should say: "Hi devcatalin/rose! You've successfully authenticated"
-
-# Re-copy if needed
-scp -i ~/.ssh/deploy_vps_key ~/.ssh/rose_repo_deploy deploy@49.12.112.245:~/.ssh/id_ed25519
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "chmod 600 ~/.ssh/id_ed25519"
-```
-
-## 🚀 Making Changes
-
-### Add Service to Compose
-
-1. Update `platform/docker-compose.yml` with new service + Traefik labels
-2. No DNS change needed (wildcard covers all subdomains)
-3. Commit and push—GitHub Actions deploys automatically
-4. Verify: `curl -I https://newservice.devcatalin.com`
-
-### Update Image Version
-
-1. Change tag in `platform/docker-compose.yml`
-2. Push—CI pulls new image and recreates container
-
-### Change Cloud-Init
-
-1. Edit `platform/cloud-init.yaml`
-2. **Reprovision required:** `./platform/scripts/create_vps.sh`
-3. Cloud-init only runs on first boot
-
-## 📝 Best Practices
-
-- **Pinned tags only** - Never `:latest`
-- **Validate first** - `docker compose config` before push
-- **Monitor deploys** - Watch GitHub Actions + logs
-- **Reprovision often** - Keeps setup reproducible
-
-## � Security Notes
-
-- `deploy` user: minimal sudo (cloud-init only), no password
-- Root SSH: disabled
-- UFW: only 22, 80, 443 open
-- TLS: auto-renewed by Traefik
-- Docker socket: read-only mount to Traefik
-
-## �📚 Reference
-
-- Hetzner Cloud: https://docs.hetzner.com/cloud/
-- Cloud-Init: https://cloudinit.readthedocs.io/
-- Traefik: https://doc.traefik.io/traefik/
-- Let's Encrypt rate limits: https://letsencrypt.org/docs/rate-limits/
