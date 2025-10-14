@@ -29,11 +29,13 @@ else
   }
 fi
 
-# Create necessary directories for Directus
-echo "==> Creating Directus directories..."
-sudo mkdir -p /var/lib/directus/{database,uploads,extensions}
-sudo chown -R deploy:deploy /var/lib/directus
-echo "✓ Directus directories created"
+# Create necessary directories on persistent volume
+echo "==> Creating persistent volume directories..."
+sudo mkdir -p /mnt/hub-volume/directus/{database,uploads,extensions}
+sudo mkdir -p /mnt/hub-volume/traefik/acme
+sudo chown -R deploy:deploy /mnt/hub-volume/directus
+sudo chown -R deploy:deploy /mnt/hub-volume/traefik
+echo "✓ Persistent volume directories created"
 
 # Move .env file from home to platform directory
 echo "==> Setting up environment variables..."

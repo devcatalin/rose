@@ -17,7 +17,7 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /var/lib/traefik/acme:/letsencrypt
+      - /mnt/hub-volume/traefik/acme:/letsencrypt
       - ./traefik/dynamic:/etc/traefik/dynamic:ro
     command:
       # Global
@@ -97,7 +97,7 @@ services:
     networks:
       - web
     volumes:
-      - /var/lib/directus/database:/var/lib/postgresql/data
+      - /mnt/hub-volume/directus/database:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: "directus"
       POSTGRES_PASSWORD: "${CMS_DB_PASSWORD}"
@@ -141,8 +141,8 @@ services:
     networks:
       - web
     volumes:
-      - /var/lib/directus/uploads:/directus/uploads
-      - /var/lib/directus/extensions:/directus/extensions
+      - /mnt/hub-volume/directus/uploads:/directus/uploads
+      - /mnt/hub-volume/directus/extensions:/directus/extensions
     depends_on:
       cms-database:
         condition: service_healthy

@@ -14,6 +14,8 @@ SSH_KEY_NAME="default"              # Name of SSH key in Hetzner project
 CLOUD_INIT_FILE="platform/cloud-init.yaml"
 HCLOUD_TOKEN_FILE="$HOME/.config/hcloud_token"
 FLOATING_IP_NAME="hub-ip"           # Existing floating IP in Hetzner Cloud
+VOLUME_ID="103719991"               # Volume ID (hcloud volume list)
+VOLUME_MOUNT_PATH="/mnt/hub-volume" # Where to mount the volume on VPS
 REPO_DEPLOY_KEY="$HOME/.ssh/rose_repo_deploy"  # Private key for git clone
 VPS_SSH_KEY="$HOME/.ssh/deploy_vps_key"        # SSH key to connect to VPS
 # ========================
@@ -36,6 +38,10 @@ ssh-keygen -R "$FIP_ADDR" >/dev/null 2>&1 || true
 
 # Delete old server if it exists
 if hcloud server describe "$NAME" >/dev/null 2>&1; then
+  echo "==> Detaching volume (ID: $VOLUME_ID) from old server (if attached)..."
+  hcloud volume detach "$VOLUME_ID" 2>/dev/null || true
+  sleep 2
+  
   echo "==> Deleting old server '$NAME'..."
   hcloud server delete "$NAME"
   sleep 3
@@ -131,6 +137,17 @@ EOF" && echo -n "."
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
   "sudo chmod +x /etc/init.d/configure-floating-ip && \
    sudo update-rc.d configure-floating-ip defaults" && echo " ✓"
+
+echo "==> Attaching volume (ID: $VOLUME_ID) to server..."
+hcloud volume attach --server "$NAME" "$VOLUME_ID" >/dev/null || {
+  echo "⚠️  Volume already attached or attachment failed"
+}
+
+echo -n "==> Mounting persistent volume"
+VOLUME_DEVICE="/dev/disk/by-id/scsi-0HC_Volume_${VOLUME_ID}"
+ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
+  "sudo mkdir -p $VOLUME_MOUNT_PATH && \
+   sudo mount -o discard,defaults $VOLUME_DEVICE $VOLUME_MOUNT_PATH 2>/dev/null || true" && echo " ✓"
 
 echo -n "==> Copying deploy key, .env file, and bootstrap script to VPS"
 scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \

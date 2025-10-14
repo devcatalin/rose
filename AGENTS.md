@@ -26,6 +26,16 @@ Essential non-obvious context for working with this infrastructure. File content
 - Main IP: Changes on each reprovision (obtained from hcloud API)
 - SSH key name in Hetzner: `default`
 
+**Persistent Volume:**
+
+- Volume ID: `103719991`
+- Size: 10 GB
+- Device path: `/dev/disk/by-id/scsi-0HC_Volume_103719991`
+- Mount point: `/mnt/hub-volume`
+- Filesystem: ext4
+- Persists across VPS reprovisioning
+- Automatically attached and mounted by `create_vps.sh`
+
 **Local Machine Requirements:**
 
 - `hcloud` CLI installed with token at `~/.config/hcloud_token`
@@ -45,8 +55,12 @@ Essential non-obvious context for working with this infrastructure. File content
 
 - Repository: `/srv/rose`
 - Platform directory: `/srv/rose/platform`
-- Traefik certs: `/var/lib/traefik/acme/acme.json` (persisted)
 - Deploy key: `/home/deploy/.ssh/id_ed25519`
+- **Persistent volume mount:** `/mnt/hub-volume`
+- Traefik certs: `/mnt/hub-volume/traefik/acme/acme.json` (persisted on volume)
+- Directus database: `/mnt/hub-volume/directus/database` (persisted on volume)
+- Directus uploads: `/mnt/hub-volume/directus/uploads` (persisted on volume)
+- Directus extensions: `/mnt/hub-volume/directus/extensions` (persisted on volume)
 
 **SSH Access:**
 
