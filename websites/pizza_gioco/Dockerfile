@@ -19,7 +19,7 @@ RUN npm run build
 FROM nginx:1.28.0-alpine
 
 # Copy built assets from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
 
 # Add custom nginx config for SPA routing
 RUN echo 'server { \
