@@ -12,6 +12,8 @@ packages:
   - ufw
   - unattended-upgrades
   - fail2ban
+  - jq
+  - ripgrep
 
 # --- User ---
 users:

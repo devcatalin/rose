@@ -43,6 +43,11 @@ Essential non-obvious context for working with this infrastructure. File content
 - SSH key for VPS access: `~/.ssh/deploy_vps_key`
 - SSH key for repo access: `~/.ssh/rose_repo_deploy` (added as GitHub deploy key)
 
+**VPS Utilities (pre-installed via cloud-init):**
+
+- `jq` - JSON processor for parsing API responses and config files
+- `ripgrep` (rg) - Fast recursive search tool for logs and code
+
 **VPS User:**
 
 - Username: `deploy`
