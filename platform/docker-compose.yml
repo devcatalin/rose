@@ -39,7 +39,7 @@ services:
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
       - --entrypoints.websecure.address=:443
       # ACME (Let's Encrypt)
-      - --certificatesresolvers.myresolver.acme.email=catalin.hoha.dev@gmail.com
+      - --certificatesresolvers.myresolver.acme.email=askdevhow@gmail.com
       - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.myresolver.acme.httpchallenge=true
       - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
