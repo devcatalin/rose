@@ -179,3 +179,47 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+  floraria-hortensia:
+    build:
+      context: ../websites/floraria_hortensia
+      dockerfile: Dockerfile
+    image: floraria-hortensia:latest
+    container_name: floraria-hortensia
+    restart: unless-stopped
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.floraria-hortensia.rule=Host(`floraria-hortensia.devcatalin.com`)"
+      - "traefik.http.routers.floraria-hortensia.entrypoints=websecure"
+      - "traefik.http.routers.floraria-hortensia.tls=true"
+      - "traefik.http.routers.floraria-hortensia.tls.certresolver=myresolver"
+      - "traefik.http.services.floraria-hortensia.loadbalancer.server.port=80"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  pizza-gioco:
+    build:
+      context: ../websites/pizza_gioco
+      dockerfile: Dockerfile
+    image: pizza-gioco:latest
+    container_name: pizza-gioco
+    restart: unless-stopped
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pizza-gioco.rule=Host(`pizza-gioco.devcatalin.com`)"
+      - "traefik.http.routers.pizza-gioco.entrypoints=websecure"
+      - "traefik.http.routers.pizza-gioco.tls=true"
+      - "traefik.http.routers.pizza-gioco.tls.certresolver=myresolver"
+      - "traefik.http.services.pizza-gioco.loadbalancer.server.port=80"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

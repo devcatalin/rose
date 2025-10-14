@@ -47,10 +47,10 @@ else
   echo "⚠️  No .env file found, services may fail to start"
 fi
 
-# Start docker services
-echo "==> Starting docker services..."
+# Build and start docker services
+echo "==> Building and starting docker services..."
 cd /srv/rose/platform
-docker compose up -d 2>&1 || {
+docker compose up -d --build 2>&1 || {
   echo "❌ Failed to start docker services"
   exit 1
 }

@@ -21,10 +21,10 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com \
             "cd /srv/rose && git fetch origin main && git reset --hard origin/main"
 
-      - name: Pull Docker images
+      - name: Pull and build Docker images
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@hub.devcatalin.com \
-            "cd /srv/rose/platform && docker compose pull"
+            "cd /srv/rose/platform && docker compose pull && docker compose build"
 
       - name: Deploy with Docker Compose
         run: |
