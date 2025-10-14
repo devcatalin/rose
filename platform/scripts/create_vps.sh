@@ -132,15 +132,18 @@ ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
   "sudo chmod +x /etc/init.d/configure-floating-ip && \
    sudo update-rc.d configure-floating-ip defaults" && echo " ✓"
 
-echo -n "==> Copying deploy key and bootstrap script to VPS"
+echo -n "==> Copying deploy key, .env file, and bootstrap script to VPS"
 scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
   "$REPO_DEPLOY_KEY" "deploy@$MAIN_IP:/home/deploy/.ssh/id_ed25519" && echo -n "."
+
+scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
+  "platform/.env" "deploy@$MAIN_IP:/home/deploy/.env" && echo -n "."
 
 scp -q -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no \
   "platform/scripts/bootstrap.sh" "deploy@$MAIN_IP:/home/deploy/bootstrap.sh" && echo -n "."
 
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \
-  "chmod +x /home/deploy/bootstrap.sh" && echo " ✓"
+  "chmod +x /home/deploy/bootstrap.sh && chmod 600 /home/deploy/.env" && echo " ✓"
 
 echo "==> Running bootstrap script..."
 ssh -i "$VPS_SSH_KEY" -o StrictHostKeyChecking=no "deploy@$MAIN_IP" \

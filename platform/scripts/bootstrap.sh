@@ -35,6 +35,16 @@ sudo mkdir -p /var/lib/directus/{database,uploads,extensions}
 sudo chown -R deploy:deploy /var/lib/directus
 echo "✓ Directus directories created"
 
+# Move .env file from home to platform directory
+echo "==> Setting up environment variables..."
+if [[ -f /home/deploy/.env ]]; then
+  mv /home/deploy/.env /srv/rose/platform/.env
+  chmod 600 /srv/rose/platform/.env
+  echo "✓ .env file configured"
+else
+  echo "⚠️  No .env file found, services may fail to start"
+fi
+
 # Start docker services
 echo "==> Starting docker services..."
 cd /srv/rose/platform
