@@ -8,7 +8,7 @@ trap 'echo "❌ Error on line $LINENO" >&2' ERR
 # === Config (edit me) ===
 NAME="hub"                          # Server name
 TYPE="cpx11"                        # Plan
-IMAGE="ubuntu-24.04"                # Base image
+IMAGE="docker-ce"                   # Hetzner Docker CE app (Ubuntu 24.04 with Docker pre-installed)
 LOCATION="fsn1"                     # fsn1 | hel1 | nbg1
 SSH_KEY_NAME="default"              # Name of SSH key in Hetzner project
 CLOUD_INIT_FILE="platform/cloud-init.yaml"

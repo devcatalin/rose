@@ -22,7 +22,7 @@ Essential non-obvious context for working with this infrastructure. File content
 - Server name: `hub`
 - Type: CPX11 (2 vCPU, 2GB RAM)
 - Location: fsn1 (Falkenstein, Germany)
-- Image: ubuntu-24.04
+- Image: docker-ce (Ubuntu 24.04 with Docker & Docker Compose pre-installed)
 - Main IP: Changes on each reprovision (obtained from hcloud API)
 - SSH key name in Hetzner: `default`
 
@@ -56,10 +56,9 @@ ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245
 
 **Cloud-Init Templating:**
 
-- `platform/cloud-init.yaml` contains `__FLOATING_IP__` placeholder
-- `create_vps.sh` renders it with actual floating IP before server creation
-- Docker installed from official repository with 5-attempt retry logic
-- Logs retries to `/var/log/cloud-init-rose.log`
+- Uses Hetzner's `docker-ce` app image with Docker pre-installed
+- `platform/cloud-init.yaml` configures firewall, users, and services
+- No Docker installation needed - comes ready in the image
 
 **GitHub Secrets Required:**
 
@@ -79,7 +78,7 @@ cd /Users/catalin/Projects/rose
 Expected:
 
 - Completes in ~2-3 minutes
-- May show cloud-init warnings if Docker install required retries
+- Docker comes pre-installed (no installation retries needed)
 - Ends with "✅ Done: hub is up"
 - Services live at `https://hub.devcatalin.com`
 
@@ -164,19 +163,19 @@ ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /etc/systemd/network/60-f
 
 **Symptom:** `docker: command not found` when `create_vps.sh` runs
 
-**Cause:** Cloud-init package installation failed or timed out
+**Cause:** Hetzner's docker-ce image failed to deploy properly (very rare)
 
 **Solution:**
 
 ```bash
-# Check cloud-init status
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo cloud-init status --long"
+# Check if Docker service is running
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo systemctl status docker"
 
-# Check retry log
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /var/log/cloud-init-rose.log"
+# Check Docker version (should be pre-installed)
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "docker --version"
 
-# Manually install Docker from official repo (then fix cloud-init.yaml)
-ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "sudo apt-get update && sudo apt-get install -y docker-ce docker-compose-plugin"
+# If missing, the image may not be docker-ce - check with:
+ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cat /etc/os-release"
 ```
 
 ### Floating IP Not Reachable

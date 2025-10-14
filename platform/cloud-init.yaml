@@ -9,8 +9,6 @@ disable_root: false # allow root SSH for debugging (disable manually later)
 package_update: true
 package_upgrade: true
 packages:
-  - docker.io
-  - docker-compose-v2
   - ufw
   - unattended-upgrades
   - fail2ban
@@ -31,9 +29,6 @@ runcmd:
   - ufw allow 80/tcp
   - ufw allow 443/tcp
   - ufw --force enable
-
-  # Docker service
-  - systemctl enable --now docker
 
   # Traefik cert store & app dir
   - mkdir -p /srv/rose
@@ -56,7 +51,7 @@ runcmd:
   - ln -sf /srv/rose/platform /srv/platform
 
   # Initial docker compose up
-  - bash -lc 'cd /srv/platform && [ -f .env ] && docker compose up -d'
+  - cd /srv/platform && docker compose up -d
 
   # Enable unattended upgrades
   - systemctl enable --now unattended-upgrades
