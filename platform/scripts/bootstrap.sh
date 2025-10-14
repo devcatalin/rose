@@ -29,6 +29,12 @@ else
   }
 fi
 
+# Create necessary directories for Directus
+echo "==> Creating Directus directories..."
+sudo mkdir -p /var/lib/directus/{database,uploads,extensions}
+sudo chown -R deploy:deploy /var/lib/directus
+echo "✓ Directus directories created"
+
 # Start docker services
 echo "==> Starting docker services..."
 cd /srv/rose/platform

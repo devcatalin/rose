@@ -89,3 +89,93 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+
+  cms-database:
+    image: postgis/postgis:13-master
+    container_name: cms-database
+    restart: unless-stopped
+    networks:
+      - web
+    volumes:
+      - /var/lib/directus/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "directus"
+      POSTGRES_PASSWORD: "${CMS_DB_PASSWORD}"
+      POSTGRES_DB: "directus"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host=localhost", "--username=directus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+
+  cms-cache:
+    image: redis:6
+    container_name: cms-cache
+    restart: unless-stopped
+    networks:
+      - web
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+
+  cms:
+    image: directus/directus:11.3.3
+    container_name: cms
+    restart: unless-stopped
+    networks:
+      - web
+    volumes:
+      - /var/lib/directus/uploads:/directus/uploads
+      - /var/lib/directus/extensions:/directus/extensions
+    depends_on:
+      cms-database:
+        condition: service_healthy
+      cms-cache:
+        condition: service_healthy
+    environment:
+      SECRET: "${CMS_SECRET}"
+
+      DB_CLIENT: "pg"
+      DB_HOST: "cms-database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "directus"
+      DB_PASSWORD: "${CMS_DB_PASSWORD}"
+
+      CACHE_ENABLED: "true"
+      CACHE_AUTO_PURGE: "true"
+      CACHE_STORE: "redis"
+      REDIS: "redis://cms-cache:6379"
+
+      ADMIN_EMAIL: "${CMS_ADMIN_EMAIL}"
+      ADMIN_PASSWORD: "${CMS_PASSWORD}"
+
+      PUBLIC_URL: "https://cms.devcatalin.com"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cms.rule=Host(`cms.devcatalin.com`)"
+      - "traefik.http.routers.cms.entrypoints=websecure"
+      - "traefik.http.routers.cms.tls=true"
+      - "traefik.http.routers.cms.tls.certresolver=myresolver"
+      - "traefik.http.services.cms.loadbalancer.server.port=8055"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
