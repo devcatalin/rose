@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { Calendar, Users, Clock, Phone, Mail } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Card } from './ui/card';
+import {useState} from 'react';
+
+import {Calendar, Clock, Mail, Phone, Users} from 'lucide-react';
+
+import {Button} from './ui/button';
+import {Card} from './ui/card';
+import {Input} from './ui/input';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui/select';
+import {Textarea} from './ui/textarea';
 
 export function BookingSection() {
   const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ export function BookingSection() {
     time: '',
     guests: '',
     eventType: '',
-    message: ''
+    message: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,37 +32,41 @@ export function BookingSection() {
       time: '',
       guests: '',
       eventType: '',
-      message: ''
+      message: '',
     });
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({...prev, [field]: value}));
   };
 
   return (
-    <section id="booking" className="py-16" style={{ backgroundColor: '#FFFBEB' }}>
+    <section id="booking" className="py-16" style={{backgroundColor: '#FFFBEB'}}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-amber-900 mb-4">Rezerva o Petrecere sau o Pomana</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Transformă-ți evenimentul special într-o experiență de neuitat la Pizza Gioco. 
-            Completează formularul de mai jos și te vom contacta pentru a discuta detaliile.
+            Transformă-ți evenimentul special într-o experiență de neuitat la Pizza Gioco. Completează formularul de mai
+            jos și te vom contacta pentru a discuta detaliile.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <Card className="p-6 bg-white shadow-lg border border-amber-200">
-            <h3 className="text-xl font-semibold text-amber-900 mb-4 text-center md:text-left">De ce să alegi Pizza Gioco?</h3>
+            <h3 className="text-xl font-semibold text-amber-900 mb-4 text-center md:text-left">
+              De ce să alegi Pizza Gioco?
+            </h3>
             <div className="space-y-6 md:space-y-4">
               <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
                 <Users className="w-5 h-5 text-amber-700 md:mt-1" />
                 <div className="text-center md:text-left">
                   <h4 className="font-medium text-amber-900">Spațiu generos</h4>
-                  <p className="text-gray-600 text-sm">Capacitate până la 80 de persoane în atmosferă caldă și primitoare</p>
+                  <p className="text-gray-600 text-sm">
+                    Capacitate până la 80 de persoane în atmosferă caldă și primitoare
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
                 <Calendar className="w-5 h-5 text-amber-700 md:mt-1" />
                 <div className="text-center md:text-left">
@@ -68,7 +74,7 @@ export function BookingSection() {
                   <p className="text-gray-600 text-sm">Te ajutăm să organizezi totul, de la meniu la decorațiuni</p>
                 </div>
               </div>
-              
+
               <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
                 <Clock className="w-5 h-5 text-amber-700 md:mt-1" />
                 <div className="text-center md:text-left">

@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { motion } from 'motion/react';
-import { slideShowImages } from './hero-section';
+import {useEffect, useState} from 'react';
+
+import {motion} from 'motion/react';
+
+import {ImageWithFallback} from './figma/ImageWithFallback';
+import {slideShowImages} from './hero-section';
 
 export function MobileCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -10,7 +12,7 @@ export function MobileCarousel() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slideShowImages.length);
+      setCurrentSlide(prev => (prev + 1) % slideShowImages.length);
     }, 3000);
     return () => clearInterval(timer);
   }, []);
@@ -20,11 +22,11 @@ export function MobileCarousel() {
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slideShowImages.length) % slideShowImages.length);
+    setCurrentSlide(prev => (prev - 1 + slideShowImages.length) % slideShowImages.length);
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slideShowImages.length);
+    setCurrentSlide(prev => (prev + 1) % slideShowImages.length);
   };
 
   // Touch handlers for mobile swipe
@@ -53,7 +55,7 @@ export function MobileCarousel() {
   };
 
   return (
-    <div 
+    <div
       className="lg:hidden w-full h-80 relative overflow-hidden bg-gradient-to-br from-pink-50 to-purple-50"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
@@ -64,14 +66,14 @@ export function MobileCarousel() {
         <motion.div
           key={index}
           className="absolute inset-0"
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ 
+          initial={{opacity: 0, scale: 1.1}}
+          animate={{
             opacity: currentSlide === index ? 1 : 0,
-            scale: currentSlide === index ? 1 : 1.1
+            scale: currentSlide === index ? 1 : 1.1,
           }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          transition={{duration: 1.2, ease: 'easeInOut'}}
         >
-          <ImageWithFallback 
+          <ImageWithFallback
             src={image}
             alt={`Aranjamente florale elegante ${index + 1}`}
             className="w-full h-full object-cover"
@@ -87,13 +89,11 @@ export function MobileCarousel() {
             <motion.button
               key={index}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide 
-                  ? 'bg-white scale-110 shadow-lg' 
-                  : 'bg-white/50 hover:bg-white/70'
+                index === currentSlide ? 'bg-white scale-110 shadow-lg' : 'bg-white/50 hover:bg-white/70'
               }`}
               onClick={() => goToSlide(index)}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{scale: 1.2}}
+              whileTap={{scale: 0.9}}
             />
           ))}
         </div>
@@ -112,9 +112,9 @@ export function MobileCarousel() {
       <div className="absolute bottom-0 left-0 w-full h-1 bg-black/10 z-20">
         <motion.div
           className="h-full bg-pink-400"
-          initial={{ width: "0%" }}
-          animate={{ width: `${((currentSlide + 1) / slideShowImages.length) * 100}%` }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          initial={{width: '0%'}}
+          animate={{width: `${((currentSlide + 1) / slideShowImages.length) * 100}%`}}
+          transition={{duration: 0.3, ease: 'easeInOut'}}
         />
       </div>
     </div>

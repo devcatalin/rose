@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import {useState} from 'react';
+
+import {Menu, X} from 'lucide-react';
+
+import {ImageWithFallback} from './figma/ImageWithFallback';
 
 interface Promotion {
   id: string;
@@ -14,24 +16,24 @@ interface HeaderProps {
   promotions?: Promotion[];
 }
 
-export function Header({ promotions = [] }: HeaderProps) {
+export function Header({promotions = []}: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromo, setCurrentPromo] = useState(0);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({behavior: 'smooth'});
     }
     setIsMenuOpen(false);
   };
 
   const nextPromo = () => {
-    setCurrentPromo((prev) => (prev + 1) % promotions.length);
+    setCurrentPromo(prev => (prev + 1) % promotions.length);
   };
 
   const prevPromo = () => {
-    setCurrentPromo((prev) => (prev - 1 + promotions.length) % promotions.length);
+    setCurrentPromo(prev => (prev - 1 + promotions.length) % promotions.length);
   };
 
   return (
@@ -42,14 +44,14 @@ export function Header({ promotions = [] }: HeaderProps) {
           <div className="max-w-7xl mx-auto px-2 sm:px-4 py-3 md:py-0 md:min-h-[80px] md:flex md:items-center md:justify-center">
             <div className="flex items-center justify-between gap-2 sm:gap-4 md:gap-32 md:items-center">
               {promotions.length > 1 && (
-                <button 
+                <button
                   onClick={prevPromo}
                   className="text-white hover:text-red-200 transition-colors text-3xl sm:text-4xl flex-shrink-0 md:leading-none md:flex md:items-baseline"
                 >
                   ‹
                 </button>
               )}
-              
+
               <div className="flex-1 text-center min-w-0 md:mt-2">
                 <div className="flex items-center justify-center gap-2 sm:gap-4">
                   {promotions[currentPromo].image && (
@@ -61,13 +63,15 @@ export function Header({ promotions = [] }: HeaderProps) {
                   )}
                   <div className="min-w-0">
                     <span className="font-semibold text-sm sm:text-base">{promotions[currentPromo].title}</span>
-                    <span className="ml-1 sm:ml-2 text-red-200 text-sm sm:text-base">{promotions[currentPromo].description}</span>
+                    <span className="ml-1 sm:ml-2 text-red-200 text-sm sm:text-base">
+                      {promotions[currentPromo].description}
+                    </span>
                   </div>
                 </div>
               </div>
-              
+
               {promotions.length > 1 && (
-                <button 
+                <button
                   onClick={nextPromo}
                   className="text-white hover:text-red-200 transition-colors text-3xl sm:text-4xl flex-shrink-0 md:leading-none md:flex md:items-baseline"
                 >
@@ -91,25 +95,25 @@ export function Header({ promotions = [] }: HeaderProps) {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <button 
+            <button
               onClick={() => scrollToSection('menu')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium"
             >
               Meniu
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('about')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium"
             >
               Despre Noi
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('booking')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium"
             >
               Rezervări
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection('contact')}
               className="bg-amber-700 hover:bg-amber-800 text-white px-6 py-2 rounded-lg transition-colors font-medium"
             >
@@ -118,10 +122,7 @@ export function Header({ promotions = [] }: HeaderProps) {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-gray-700"
-          >
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-gray-700">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -130,25 +131,25 @@ export function Header({ promotions = [] }: HeaderProps) {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
             <div className="flex flex-col gap-4 mt-4">
-              <button 
+              <button
                 onClick={() => scrollToSection('menu')}
                 className="text-center md:text-left text-gray-700 hover:text-amber-700 transition-colors font-medium"
               >
                 Meniu
               </button>
-              <button 
+              <button
                 onClick={() => scrollToSection('about')}
                 className="text-center md:text-left text-gray-700 hover:text-amber-700 transition-colors font-medium"
               >
                 Despre Noi
               </button>
-              <button 
+              <button
                 onClick={() => scrollToSection('booking')}
                 className="text-center md:text-left text-gray-700 hover:text-amber-700 transition-colors font-medium"
               >
                 Rezervări
               </button>
-              <button 
+              <button
                 onClick={() => scrollToSection('contact')}
                 className="text-center md:text-left bg-amber-700 hover:bg-amber-800 text-white px-6 py-2 rounded-lg transition-colors font-medium w-fit mx-auto md:mx-0"
               >
