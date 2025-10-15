@@ -1,18 +1,24 @@
 import {useEffect, useState} from 'react';
 
-import whiteRibbonBouquet from '@/assets/2fbc87892ce03498dc202f467f7d2d8094fcc0c3.png';
-import logo from '@/assets/a8ea66964180f21d0bad13fe496aea8186d71ebd.png';
-import vintageBouquet from '@/assets/a80333942ec16720cb0a00c81628682d586c41e7.png';
-import pinkPeonies from '@/assets/ca1e0a022f57d13471c3244a4454023e1fbc18a3.png';
-import whiteOrchids from '@/assets/d529982c519cfc5da5cbf7608fa176844d1c9548.png';
-import whitePeoniesBridal from '@/assets/f1d558fa1c9c47bb079991a57829523cc17da62a.png';
+import logo from '@/assets/logo.png';
+import pinkPeonies from '@/assets/pinkPeonies.png';
+import vintageBouquet from '@/assets/vintageBouquet.png';
+import whiteOrchidBridalBouquet from '@/assets/whiteOrchidBridalBouquet.png';
+import whitePeoniesBridal from '@/assets/whitePeoniesBridal.png';
+import whiteRibbonBouquet from '@/assets/whiteRibbonBouquet.png';
 import {ImageWithFallback} from '@/components/figma/ImageWithFallback';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from '@/components/ui/sheet';
 import {ChevronDown, ChevronLeft, ChevronRight, Flower, Menu, MessageCircle, Phone, X} from 'lucide-react';
 import {motion} from 'motion/react';
 
-export const slideShowImages = [pinkPeonies, whiteOrchids, vintageBouquet, whiteRibbonBouquet, whitePeoniesBridal];
+export const slideShowImages = [
+  pinkPeonies,
+  whiteOrchidBridalBouquet,
+  vintageBouquet,
+  whiteRibbonBouquet,
+  whitePeoniesBridal,
+];
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);

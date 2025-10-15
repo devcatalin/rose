@@ -1,22 +1,10 @@
 import {useState} from 'react';
 
+import type {MenuItem} from '../data';
+
 import {PizzaCard} from './PizzaCard';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui/select';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from './ui/tabs';
-
-interface MenuItem {
-  id: string;
-  name: string;
-  ingredients: string[];
-  price: number;
-  image: string;
-  category: 'pizza' | 'pasta' | 'special' | 'dessert' | 'extra' | 'pomeni';
-  isPromotion?: boolean;
-  originalPrice?: number;
-  smallPrice?: number;
-  portion?: string;
-  isSignature?: boolean;
-}
 
 interface MenuSectionProps {
   menuItems: MenuItem[];
