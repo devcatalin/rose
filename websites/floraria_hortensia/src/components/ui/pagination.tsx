@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon} from 'lucide-react@0.487.0';
+import {ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon} from 'lucide-react';
 
 import {Button, buttonVariants} from './button';
 import {cn} from './utils';
