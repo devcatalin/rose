@@ -30,7 +30,7 @@ interface ContentSectionProps {
 }
 
 export function ContentSection({
-  id,
+  id = '',
   title,
   description,
   image,
@@ -118,7 +118,7 @@ export function ContentSection({
       className={`py-20 ${backgroundGradient} ${['funerare', 'mireasa', 'buchete'].includes(id) ? 'relative overflow-hidden' : ''}`}
     >
       {/* Floating decorative elements - only for specific sections */}
-      {['funerare', 'mireasa', 'buchete'].includes(id) && (
+      {['funerare', 'mireasa', 'buchete'].includes(id ?? '') && (
         <>
           <motion.div
             className="absolute top-16 left-12 w-16 h-16 bg-pink-200/30 rounded-full backdrop-blur-sm"
@@ -149,7 +149,7 @@ export function ContentSection({
       )}
 
       <div
-        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${['funerare', 'mireasa', 'buchete'].includes(id) ? 'relative z-10' : ''}`}
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${['funerare', 'mireasa', 'buchete'].includes(id ?? '') ? 'relative z-10' : ''}`}
       >
         <div className={`grid ${gridCols} gap-16 items-center`}>
           {isImageLeft ? (
