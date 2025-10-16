@@ -167,6 +167,11 @@ services:
       ADMIN_PASSWORD: "${CMS_PASSWORD}"
 
       PUBLIC_URL: "https://cms.devcatalin.com"
+
+      # CORS Configuration
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "true"
+      CORS_CREDENTIALS: "true"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cms.rule=Host(`cms.devcatalin.com`)"
@@ -187,6 +192,8 @@ services:
     image: floraria-hortensia:latest
     container_name: floraria-hortensia
     restart: unless-stopped
+    environment:
+      VITE_DIRECTUS_URL: "https://cms.devcatalin.com"
     networks:
       - web
     labels:
