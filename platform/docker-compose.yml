@@ -62,7 +62,7 @@ services:
     networks:
       - web
     volumes:
-      - ./services/dashy/conf.yml:/app/public/conf.yml:ro
+      - ./services/dashy/conf.yml:/app/user-data/conf.yml:ro
     environment:
       - NODE_ENV=production
     labels:
