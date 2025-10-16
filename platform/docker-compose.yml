@@ -1,5 +1,3 @@
-version: "3.8"
-
 networks:
   web:
     name: web
@@ -8,6 +6,7 @@ networks:
 services:
   traefik:
     image: traefik:3.5.3
+    profiles: ["external"]
     container_name: traefik
     restart: unless-stopped
     networks:
@@ -57,6 +56,7 @@ services:
 
   dashy:
     image: lissy93/dashy:3.1.0
+    profiles: ["external"]
     container_name: dashy
     restart: unless-stopped
     networks:
@@ -92,6 +92,7 @@ services:
 
   cms-database:
     image: postgis/postgis:13-master
+    profiles: ["external"]
     container_name: cms-database
     restart: unless-stopped
     networks:
@@ -117,6 +118,7 @@ services:
 
   cms-cache:
     image: redis:6
+    profiles: ["external"]
     container_name: cms-cache
     restart: unless-stopped
     networks:
@@ -136,6 +138,7 @@ services:
 
   cms:
     image: directus/directus:11.3.3
+    profiles: ["external"]
     container_name: cms
     restart: unless-stopped
     networks:
@@ -189,6 +192,7 @@ services:
     build:
       context: ../websites/floraria_hortensia
       dockerfile: Dockerfile
+    profiles: ["build"]
     image: floraria-hortensia:latest
     container_name: floraria-hortensia
     restart: unless-stopped
@@ -213,6 +217,7 @@ services:
     build:
       context: ../websites/pizza_gioco
       dockerfile: Dockerfile
+    profiles: ["build"]
     image: pizza-gioco:latest
     container_name: pizza-gioco
     restart: unless-stopped
