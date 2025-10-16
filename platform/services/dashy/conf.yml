@@ -31,20 +31,91 @@ appConfig:
     hideFooter: false
 
 sections:
-  - name: Development
+  - name: My Websites
+    icon: fas fa-globe
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 2
+      itemSize: medium
+    items:
+      - title: Floraria Hortensia
+        description: Flower shop website
+        icon: fas fa-flower-tulip
+        url: https://floraria-hortensia.devcatalin.com
+        target: newtab
+        statusCheck: true
+      - title: Pizza Gioco
+        description: Pizza restaurant website
+        icon: fas fa-pizza-slice
+        url: https://pizza-gioco.devcatalin.com
+        target: newtab
+        statusCheck: true
+
+  - name: Development & Social
     icon: fas fa-code
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 2
+      itemSize: medium
     items:
       - title: GitHub
         description: Source code repositories
         icon: fab fa-github
         url: https://github.com/devcatalin
         target: newtab
+      - title: LinkedIn
+        description: Professional profile
+        icon: fab fa-linkedin
+        url: https://linkedin.com/in/catalinhoha
+        target: newtab
 
   - name: Infrastructure
     icon: fas fa-server
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 2
+      itemSize: medium
     items:
+      - title: Directus CMS
+        description: Content management system
+        icon: fas fa-database
+        url: https://cms.devcatalin.com
+        target: newtab
+        statusCheck: true
       - title: Hetzner Cloud
         description: VPS hosting
         icon: fas fa-cloud
         url: https://console.hetzner.cloud/
+        target: newtab
+
+  - name: Tools & Resources
+    icon: fas fa-toolbox
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 2
+      itemSize: medium
+    items:
+      - title: GitHub Actions
+        description: CI/CD pipeline status
+        icon: fas fa-robot
+        url: https://github.com/devcatalin/rose/actions
+        target: newtab
+      - title: Traefik Docs
+        description: Reverse proxy documentation
+        icon: fas fa-book
+        url: https://doc.traefik.io/traefik/
+        target: newtab
+      - title: Docker Hub
+        description: Container registry
+        icon: fab fa-docker
+        url: https://hub.docker.com/
+        target: newtab
+      - title: Let's Encrypt Status
+        description: SSL certificate status
+        icon: fas fa-lock
+        url: https://letsencrypt.status.io/
         target: newtab
