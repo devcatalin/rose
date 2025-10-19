@@ -177,10 +177,25 @@ services:
       CORS_CREDENTIALS: "true"
     labels:
       - "traefik.enable=true"
+      # Main CMS router for devcatalin.com
       - "traefik.http.routers.cms.rule=Host(`cms.devcatalin.com`)"
       - "traefik.http.routers.cms.entrypoints=websecure"
       - "traefik.http.routers.cms.tls=true"
       - "traefik.http.routers.cms.tls.certresolver=myresolver"
+      - "traefik.http.routers.cms.service=cms"
+      # Floraria Hortensia content router
+      - "traefik.http.routers.cms-floraria.rule=Host(`content.florariahortensia.ro`)"
+      - "traefik.http.routers.cms-floraria.entrypoints=websecure"
+      - "traefik.http.routers.cms-floraria.tls=true"
+      - "traefik.http.routers.cms-floraria.tls.certresolver=myresolver"
+      - "traefik.http.routers.cms-floraria.service=cms"
+      # Pizza Gioco content router (disabled until DNS is configured)
+      # - "traefik.http.routers.cms-pizza.rule=Host(`content.pizzagioco.ro`)"
+      # - "traefik.http.routers.cms-pizza.entrypoints=websecure"
+      # - "traefik.http.routers.cms-pizza.tls=true"
+      # - "traefik.http.routers.cms-pizza.tls.certresolver=myresolver"
+      # - "traefik.http.routers.cms-pizza.service=cms"
+      # Service definition
       - "traefik.http.services.cms.loadbalancer.server.port=8055"
     logging:
       driver: "json-file"
