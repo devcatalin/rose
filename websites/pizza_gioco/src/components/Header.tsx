@@ -41,12 +41,15 @@ export function Header({promotions = []}: HeaderProps) {
       {/* Promotions Banner */}
       {promotions.length > 0 && (
         <div className="bg-gradient-to-r from-red-600 to-red-700 text-white">
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 py-3 md:py-0 md:min-h-[80px] md:flex md:items-center md:justify-center">
+          <div
+            className="max-w-7xl mx-auto px-2 sm:px-4 md:flex md:items-center md:justify-center"
+            style={{paddingBottom: '6px'}}
+          >
             <div className="flex items-center justify-between gap-2 sm:gap-4 md:gap-32 md:items-center">
               {promotions.length > 1 && (
                 <button
                   onClick={prevPromo}
-                  className="text-white hover:text-red-200 transition-colors text-3xl sm:text-4xl flex-shrink-0 md:leading-none md:flex md:items-baseline"
+                  className="text-white hover:text-red-200 transition-colors text-3xl sm:text-4xl flex-shrink-0 md:leading-none md:flex md:items-baseline cursor-pointer"
                 >
                   ‹
                 </button>
@@ -73,7 +76,7 @@ export function Header({promotions = []}: HeaderProps) {
               {promotions.length > 1 && (
                 <button
                   onClick={nextPromo}
-                  className="text-white hover:text-red-200 transition-colors text-3xl sm:text-4xl flex-shrink-0 md:leading-none md:flex md:items-baseline"
+                  className="text-white hover:text-red-200 transition-colors text-3xl sm:text-4xl flex-shrink-0 md:leading-none md:flex md:items-baseline cursor-pointer"
                 >
                   ›
                 </button>

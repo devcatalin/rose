@@ -44,7 +44,7 @@ export function BookingSection() {
     <section id="booking" className="py-16" style={{backgroundColor: '#FFFBEB'}}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-amber-900 mb-4">Rezerva o Petrecere sau o Pomana</h2>
+          <h2 className="text-4xl font-bold text-amber-900 mb-4">Rezerva o Petrecere</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Transformă-ți evenimentul special într-o experiență de neuitat la Pizza Gioco. Completează formularul de mai
             jos și te vom contacta pentru a discuta detaliile.
@@ -57,7 +57,7 @@ export function BookingSection() {
               De ce să alegi Pizza Gioco?
             </h3>
             <div className="space-y-6 md:space-y-4">
-              <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
+              <div className="flex flex-col items-center gap-4 md:flex-row md:items-start">
                 <Users className="w-5 h-5 text-amber-700 md:mt-1" />
                 <div className="text-center md:text-left">
                   <h4 className="font-medium text-amber-900">Spațiu generos</h4>
