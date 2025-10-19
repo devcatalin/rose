@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
 
-import type {HortensiaDetails} from '@/lib/directus';
+import {ChevronLeft, ChevronRight} from 'lucide-react';
+
+import type {HortensiaDetails} from '@/data/directus';
 import {motion} from 'motion/react';
 
 import {ImageWithFallback} from './figma/ImageWithFallback';

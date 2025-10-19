@@ -1,4 +1,4 @@
-import type {HortensiaAbout} from '@/lib/directus';
+import type {HortensiaAbout} from '@/data/directus';
 
 import {useDirectusItems} from './useDirectusItems';
 

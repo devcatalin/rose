@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-import {type DirectusSchema, directus} from '@/lib/directus';
+import {type DirectusSchema, directus} from '@/data/directus';
 import {readItem} from '@directus/sdk';
 
 interface UseDirectusItemOptions {

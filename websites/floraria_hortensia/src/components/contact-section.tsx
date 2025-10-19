@@ -1,4 +1,4 @@
-import type {HortensiaDetails} from '@/lib/directus';
+import type {HortensiaDetails} from '@/data/directus';
 import {Clock, MapPin, Phone} from 'lucide-react';
 import {motion} from 'motion/react';
 

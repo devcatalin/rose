@@ -9,7 +9,7 @@ import {MobileCarousel} from '@/components/mobile-carousel';
 import {SlideshowModal} from '@/components/slideshow-modal';
 import {useDirectusDetails} from '@/hooks/useDirectusDetails';
 import {useDirectusSections} from '@/hooks/useDirectusSections';
-import {transformDirectusSections} from '@/lib/transformers';
+import {transformDirectusSections} from '@/data/transformers';
 
 // Static data kept for reference in src/data/contentSections.ts
 // Website now uses data from Directus CMS
