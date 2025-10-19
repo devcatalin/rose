@@ -50,7 +50,7 @@ fi
 # Build and start docker services
 echo "==> Building and starting docker services..."
 cd /srv/rose/platform
-docker compose up -d --build 2>&1 || {
+docker compose --profile external up -d --build 2>&1 || {
   echo "❌ Failed to start docker services"
   exit 1
 }
