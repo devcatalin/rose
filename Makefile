@@ -74,4 +74,4 @@ cms-backup-download:
 # List available backups on VPS
 cms-backup-list:
 	@echo "📋 Available CMS backups on VPS:"
-	@ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ls -lth /tmp/directus-backup-* 2>/dev/null | grep '^d' || echo 'No backups found'"
+	@ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ls -dth /tmp/directus-backup-* 2>/dev/null | while read dir; do echo ''; echo \"\$$dir\"; du -sh \"\$$dir\"; ls -lh \"\$$dir\" | tail -n +2; done || echo 'No backups found'"

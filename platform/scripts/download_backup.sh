@@ -28,7 +28,7 @@ if [[ $# -eq 0 ]]; then
     # List available backups on VPS
     echo -e "${YELLOW}📋 Available backups on VPS:${NC}"
     echo ""
-    ssh -i "$SSH_KEY" "$VPS_USER@$VPS_HOST" "ls -lth /tmp/directus-backup-* 2>/dev/null | grep '^d' || echo 'No backups found'"
+    ssh -i "$SSH_KEY" "$VPS_USER@$VPS_HOST" "ls -dt /tmp/directus-backup-* 2>/dev/null | while read dir; do basename \"\$dir\"; done || echo 'No backups found'"
     echo ""
     echo -e "${YELLOW}Usage:${NC}"
     echo "  $0 <backup-directory-name>"
