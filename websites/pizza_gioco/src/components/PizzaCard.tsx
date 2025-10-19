@@ -3,13 +3,15 @@ import {Badge} from './ui/badge';
 
 interface PizzaCardProps {
   name: string;
-  ingredients: string[];
+  ingredients?: string[];
+  description?: string;
   price: number | string;
   image: string;
-  category?: 'pizza' | 'pasta' | 'special' | 'dessert' | 'pomeni' | 'extra';
+  category?: string;
+  categoryName?: string;
   isPromotion?: boolean;
   originalPrice?: number;
-  smallPrice?: number;
+  smallPrice?: number | string;
   portion?: string;
   isSignature?: boolean;
 }
@@ -17,33 +19,44 @@ interface PizzaCardProps {
 export function PizzaCard({
   name,
   ingredients,
+  description,
   price,
   image,
   category = 'pizza',
+  categoryName,
   isPromotion = false,
   originalPrice,
   smallPrice,
   portion,
   isSignature = false,
 }: PizzaCardProps) {
+  // Convert description to ingredients array if needed, or use ingredients directly
+  const displayText = description || (ingredients ? ingredients.join(', ') : '');
+
   const getCategoryColor = (cat: string) => {
-    switch (cat) {
+    switch (cat.toLowerCase()) {
       case 'pizza':
         return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'pasta':
+      case 'paste':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'dessert':
+      case 'deserturi':
         return 'bg-pink-100 text-pink-800 border-pink-200';
       case 'special':
+      case 'catering':
         return 'bg-green-100 text-green-800 border-green-200';
       case 'pomeni':
         return 'bg-blue-100 text-blue-800 border-blue-200';
       case 'extra':
+      case 'bauturi':
         return 'bg-purple-100 text-purple-800 border-purple-200';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
+
+  const displayCategoryName = categoryName || category;
 
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-amber-100 flex flex-col h-full">
@@ -60,7 +73,7 @@ export function PizzaCard({
           </div>
         )}
         <Badge className={`absolute top-3 left-3 ${getCategoryColor(category)} border`} variant="outline">
-          {category.charAt(0).toUpperCase() + category.slice(1)}
+          {displayCategoryName}
         </Badge>
       </div>
 
@@ -75,7 +88,7 @@ export function PizzaCard({
           <p
             className={`text-gray-600 leading-snug ${category === 'pomeni' ? 'line-clamp-2 mt-4 md:mt-2' : category === 'pizza' ? 'line-clamp-3 -mt-1 md:mt-0' : 'line-clamp-3 mt-2 md:mt-0'} text-[17px] md:text-[15px]`}
           >
-            {ingredients.join(', ')}
+            {displayText}
           </p>
         </div>
 
@@ -91,7 +104,7 @@ export function PizzaCard({
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
               {/* Pizza sizes */}
-              {smallPrice && category === 'pizza' && (
+              {smallPrice && category.toLowerCase() === 'pizza' && (
                 <div className="flex items-center justify-start">
                   <span className="text-sm text-gray-600 text-[16px] md:text-[16px]">
                     Mare: <span className="font-bold text-amber-800">{price} lei</span>
@@ -103,7 +116,7 @@ export function PizzaCard({
               )}
 
               {/* Regular price for non-pizza items */}
-              {(!smallPrice || category !== 'pizza') && (
+              {(!smallPrice || category.toLowerCase() !== 'pizza') && (
                 <div className="flex items-center gap-1.5">
                   {isPromotion && originalPrice && (
                     <span className="text-gray-400 line-through text-sm">{originalPrice} lei</span>
@@ -122,12 +135,12 @@ export function PizzaCard({
             </div>
 
             {/* Portion info positioned in bottom right corner for pasta items */}
-            {portion && category === 'pasta' && (
+            {portion && category.toLowerCase() === 'pasta' && (
               <span className="absolute bottom-0 right-0 text-xs text-amber-700 font-medium">Porție: {portion}</span>
             )}
 
             {/* Portion info positioned in bottom right corner for extra items */}
-            {portion && category === 'extra' && (
+            {portion && category.toLowerCase() === 'extra' && (
               <span className="absolute bottom-0 right-0 text-xs text-amber-700 font-medium">Porție: {portion}</span>
             )}
           </div>

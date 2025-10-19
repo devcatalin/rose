@@ -1,6 +1,15 @@
-import {Clock, Facebook, Instagram, Mail, MapPin, Phone} from 'lucide-react';
+import {Clock, Facebook, Mail, MapPin, Phone} from 'lucide-react';
 
-export function Footer() {
+interface FooterProps {
+  schedule?: string;
+  phoneNumber?: string;
+}
+
+export function Footer({schedule, phoneNumber}: FooterProps) {
+  // Parse schedule if it's provided, otherwise use default
+  const scheduleLines = schedule?.split('\n') || ['Luni - Vineri 12:00 - 22:00', 'Sambata - Duminica 13:00 - 23:00'];
+
+  const phone = phoneNumber || '0765 381 298';
   return (
     <footer id="contact" className="bg-amber-900 text-white">
       <div className="max-w-7xl mx-auto px-4 py-12 text-center md:text-left">
@@ -42,8 +51,11 @@ export function Footer() {
 
               <div className="flex items-center gap-3 justify-center md:justify-start">
                 <Phone className="w-5 h-5 text-amber-300" />
-                <a href="tel:+40765381298" className="text-amber-200 hover:text-white transition-colors">
-                  0765 381 298
+                <a
+                  href={`tel:+4${phone.replace(/\s/g, '')}`}
+                  className="text-amber-200 hover:text-white transition-colors"
+                >
+                  {phone}
                 </a>
               </div>
 
@@ -60,17 +72,12 @@ export function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Program</h4>
             <div className="space-y-2">
-              <div className="flex items-center gap-2 justify-center md:justify-start">
-                <Clock className="w-4 h-4 text-amber-300" />
-                <span className="text-amber-200 text-sm">Luni - Vineri</span>
-              </div>
-              <p className="text-amber-200 md:ml-6">12:00 - 22:00</p>
-
-              <div className="flex items-center gap-2 justify-center md:justify-start">
-                <Clock className="w-4 h-4 text-amber-300" />
-                <span className="text-amber-200 text-sm">Sambata - Duminica</span>
-              </div>
-              <p className="text-amber-200 md:ml-6">13:00 - 23:00</p>
+              {scheduleLines.map((line, index) => (
+                <div key={index} className="flex items-center gap-2 justify-center md:justify-start">
+                  <Clock className="w-4 h-4 text-amber-300" />
+                  <span className="text-amber-200 text-sm">{line}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -87,7 +94,10 @@ export function Footer() {
               <a href="#booking" className="block text-amber-200 hover:text-white transition-colors">
                 Rezervări Evenimente
               </a>
-              <a href="tel:+40765381298" className="block text-amber-200 hover:text-white transition-colors">
+              <a
+                href={`tel:+4${phone.replace(/\s/g, '')}`}
+                className="block text-amber-200 hover:text-white transition-colors"
+              >
                 Comenzi Telefon
               </a>
             </div>
@@ -95,10 +105,10 @@ export function Footer() {
             <div className="pt-4 md:pb-0 border-t border-amber-800">
               <p className="text-amber-300 text-sm">Rezervări Evenimente:</p>
               <a
-                href="tel:+40765381298"
+                href={`tel:+4${phone.replace(/\s/g, '')}`}
                 className="text-amber-200 hover:text-white transition-colors text-sm mt-2 md:mt-0"
               >
-                0765 381 298
+                {phone}
               </a>
             </div>
           </div>

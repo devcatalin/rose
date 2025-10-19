@@ -7,7 +7,7 @@ import {ImageWithFallback} from './figma/ImageWithFallback';
 interface Promotion {
   id: string;
   title: string;
-  description: string;
+  subtitle: string;
   image?: string;
   validUntil?: string;
 }
@@ -67,7 +67,7 @@ export function Header({promotions = []}: HeaderProps) {
                   <div className="min-w-0">
                     <span className="font-semibold text-sm sm:text-base">{promotions[currentPromo].title}</span>
                     <span className="ml-1 sm:ml-2 text-red-200 text-sm sm:text-base">
-                      {promotions[currentPromo].description}
+                      {promotions[currentPromo].subtitle}
                     </span>
                   </div>
                 </div>

@@ -3,15 +3,32 @@ import {BookingSection} from './components/BookingSection';
 import {Footer} from './components/Footer';
 import {Header} from './components/Header';
 import {MenuSection} from './components/MenuSection';
-import {extraItems, menuItems, promotions} from './data';
-
-// Data has been extracted to separate files in the data folder
-// See: src/data/promotions.ts, src/data/menuItems.ts, src/data/extraItems.ts
+import {useDirectusCategories, useDirectusDetails, useDirectusMenuItems, useDirectusOffers} from './hooks';
 
 export default function App() {
+  const {data: details, loading: detailsLoading} = useDirectusDetails();
+  const {data: menuItems, loading: menuLoading} = useDirectusMenuItems();
+  const {data: offers, loading: offersLoading} = useDirectusOffers();
+  const {data: categories, loading: categoriesLoading} = useDirectusCategories();
+
+  const loading = detailsLoading || menuLoading || offersLoading || categoriesLoading;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-amber-700 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <span className="text-white font-bold text-2xl">PG</span>
+          </div>
+          <p className="text-amber-900 text-lg">Se încarcă...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
-      <Header promotions={promotions} />
+      <Header promotions={offers} />
 
       {/* Hero Section */}
       <section className="relative bg-white py-16 md:py-36">
@@ -20,12 +37,22 @@ export default function App() {
             {/* Left Content */}
             <div className="space-y-8 text-center lg:text-left">
               <h1 className="text-5xl md:text-6xl font-bold text-amber-900 leading-tight transition-all duration-300 hover:scale-105 flex flex-col">
-                <span>Cea mai bună pizza</span>
-                <span className="text-red-600">din Chișoda</span>
+                {details?.title ? (
+                  details.title.split('\n').map((line, i) => (
+                    <span key={i} className={i === 1 ? 'text-red-600' : ''}>
+                      {line}
+                    </span>
+                  ))
+                ) : (
+                  <>
+                    <span>Cea mai bună pizza</span>
+                    <span className="text-red-600">din Chișoda</span>
+                  </>
+                )}
               </h1>
               <p className="text-xl text-gray-700 leading-relaxed transition-all duration-300 hover:text-gray-600">
-                Descoperă gustul autentic al Italiei în fiecare înghițitură. Pizza tradițională, paste delicioase și
-                servicii de catering pentru toate evenimentele tale speciale.
+                {details?.about ||
+                  'Descoperă gustul autentic al Italiei în fiecare înghițitură. Pizza tradițională, paste delicioase și servicii de catering pentru toate evenimentele tale speciale.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
@@ -90,10 +117,10 @@ export default function App() {
         </div>
       </section>
 
-      <MenuSection menuItems={[...menuItems, ...extraItems]} />
+      <MenuSection menuItems={menuItems} categories={categories} />
       <AboutSection restaurantImage="https://images.unsplash.com/photo-1730020596764-2a51086abd49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjBwaXp6YSUyMHJlc3RhdXJhbnQlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NTgwMTI1NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080" />
       <BookingSection />
-      <Footer />
+      <Footer schedule={details?.schedule} phoneNumber={details?.phone_number} />
     </div>
   );
 }
