@@ -8,3 +8,4 @@
 export {useDirectusItems} from './useDirectusItems';
 export {useDirectusItem} from './useDirectusItem';
 export {useDirectusSections} from './useDirectusSections';
+export {useDirectusAbout} from './useDirectusAbout';

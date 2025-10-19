@@ -1,52 +1,16 @@
 import {useCallback, useRef, useState} from 'react';
 
-import {Award, ChevronLeft, ChevronRight, Clock, Flower, Heart, Shield, Star, Truck, Users} from 'lucide-react';
+import {useDirectusAbout} from '@/hooks/useDirectusAbout';
+import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {motion} from 'motion/react';
 
-const qualityTraits = [
-  {
-    icon: Heart,
-    title: 'Pasiune și Dedicare',
-    description: 'Fiecare aranjament este realizat cu dragoste și atenție la detalii',
-  },
-  {
-    icon: Flower,
-    title: 'Flori Proaspete',
-    description: 'Aprovizionare zilnică cu cele mai proaspete și frumoase flori',
-  },
-  {
-    icon: Truck,
-    title: 'Livrare Rapidă',
-    description: 'Livrăm în toată București cu promptitudine și grijă',
-  },
-  {
-    icon: Star,
-    title: 'Calitate Premium',
-    description: 'Folosim doar materiale de cea mai înaltă calitate',
-  },
-  {
-    icon: Award,
-    title: 'Experiență',
-    description: 'Echipă de floristi cu experiență și creativitate',
-  },
-  {
-    icon: Clock,
-    title: 'Serviciu La Timp',
-    description: 'Respectăm toate termenele și ne adaptăm urgent',
-  },
-  {
-    icon: Shield,
-    title: 'Garanție Calitate',
-    description: 'Oferim garanție pentru toate aranjamentele noastre',
-  },
-  {
-    icon: Users,
-    title: 'Echipă Profesionistă',
-    description: 'Floristi cu experiență internațională și pasiune autentică',
-  },
-];
+// Static data kept for reference in src/data/aboutData.ts
+// Website now uses data from Directus CMS with Material Design icons
 
 export function AboutSection() {
+  const {data: aboutCards, loading, error} = useDirectusAbout();
+
+  // All hooks must be called before any conditional returns
   const cardWidth = 320; // 80 * 4 = 320px
   const gap = 32; // 8 * 4 = 32px (gap-8)
   const leftPadding = 10; // pl-2.5 = 10px
@@ -57,6 +21,8 @@ export function AboutSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const startPosRef = useRef(0);
   const startOffsetRef = useRef(0);
+
+  const qualityTraits = aboutCards || [];
 
   // Calculate total content width
   const totalContentWidth = qualityTraits.length * cardWidth + (qualityTraits.length - 1) * gap;
@@ -152,6 +118,25 @@ export function AboutSection() {
     const newOffset = Math.min(maxOffset, dragOffset + (cardWidth + gap));
     setDragOffset(newOffset);
   };
+
+  // Show loading state
+  if (loading) {
+    return (
+      <section id="despre" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show error or no data
+  if (error || !aboutCards || aboutCards.length === 0) {
+    return null; // Silently hide the section if no data
+  }
+
   return (
     <section id="despre" className="py-20 bg-white relative overflow-hidden">
       {/* Floating decorative elements */}
@@ -262,10 +247,9 @@ export function AboutSection() {
           }}
         >
           {qualityTraits.map((trait, index) => {
-            const IconComponent = trait.icon;
             return (
               <motion.div
-                key={index}
+                key={trait.id}
                 className="group flex-shrink-0 w-80"
                 initial={{opacity: 0, y: 30}}
                 whileInView={{opacity: 1, y: 0}}
@@ -274,10 +258,10 @@ export function AboutSection() {
                 whileHover={!isDragging ? {y: -3} : {}}
               >
                 <div className="bg-white border border-pink-100 rounded-3xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-pink-200 h-full">
-                  {/* Icon */}
+                  {/* Icon - Material Design Icon */}
                   <div className="mb-6">
                     <div className="w-16 h-16 bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl flex items-center justify-center group-hover:from-pink-100 group-hover:to-pink-200 transition-all duration-300 mx-auto">
-                      <IconComponent className="h-8 w-8 text-pink-600" />
+                      <span className="material-symbols-outlined text-pink-600 text-[32px]">{trait.icon}</span>
                     </div>
                   </div>
 
