@@ -1,4 +1,4 @@
-.PHONY: help vps vps-status vps-logs vps-ssh deploy build-local cms-snapshot
+.PHONY: help vps vps-status vps-logs vps-ssh deploy build-local cms-snapshot cms-backup cms-backup-download cms-backup-list
 
 # Default target - show help
 help:
@@ -11,7 +11,10 @@ help:
 	@echo "  make vps-ssh     - SSH into the VPS"
 	@echo ""
 	@echo "CMS Management:"
-	@echo "  make cms-snapshot - Update Directus schema snapshot from VPS"
+	@echo "  make cms-snapshot        - Update Directus schema snapshot from VPS"
+	@echo "  make cms-backup          - Create a new CMS backup on VPS"
+	@echo "  make cms-backup-download - Create and download a new CMS backup"
+	@echo "  make cms-backup-list     - List available backups on VPS"
 	@echo ""
 	@echo "Deployment:"
 	@echo "  make deploy      - Deploy latest changes (via GitHub Actions)"
@@ -57,3 +60,18 @@ vps-ssh:
 cms-snapshot:
 	@echo "📸 Updating Directus schema snapshot..."
 	@./platform/scripts/update_snapshot.sh
+
+# Create CMS backup on VPS
+cms-backup:
+	@echo "💾 Creating CMS backup on VPS..."
+	@ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "cd /srv/rose/platform/scripts && ./backup_cms.sh"
+
+# Create and download CMS backup
+cms-backup-download:
+	@echo "💾 Creating and downloading CMS backup..."
+	@./platform/scripts/download_backup.sh --new
+
+# List available backups on VPS
+cms-backup-list:
+	@echo "📋 Available CMS backups on VPS:"
+	@ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245 "ls -lth /tmp/directus-backup-* 2>/dev/null | grep '^d' || echo 'No backups found'"
