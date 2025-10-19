@@ -7,9 +7,10 @@ import whiteOrchidBridalBouquet from '@/assets/whiteOrchidBridalBouquet.png';
 import whitePeoniesBridal from '@/assets/whitePeoniesBridal.png';
 import whiteRibbonBouquet from '@/assets/whiteRibbonBouquet.png';
 import {ImageWithFallback} from '@/components/figma/ImageWithFallback';
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
+import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from '@/components/ui/sheet';
-import {ChevronDown, ChevronLeft, ChevronRight, Flower, Menu, MessageCircle, Phone, X} from 'lucide-react';
+import type {ContentSection} from '@/data/types';
+import {ChevronDown, Flower, Menu, MessageCircle, Phone, X} from 'lucide-react';
 import {motion} from 'motion/react';
 
 export const slideShowImages = [
@@ -20,7 +21,11 @@ export const slideShowImages = [
   whitePeoniesBridal,
 ];
 
-export function HeroSection() {
+interface HeroSectionProps {
+  sections: ContentSection[];
+}
+
+export function HeroSection({sections}: HeroSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -31,50 +36,8 @@ export function HeroSection() {
     return () => clearInterval(timer);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({behavior: 'smooth'});
-    }
-  };
-
-  const scrollToSectionAndCloseMenu = (sectionId: string) => {
-    // For mobile devices, completely different approach to prevent Sheet interference
-    if (window.innerWidth < 1024) {
-      // Close menu immediately without any scroll interference
-      setSheetOpen(false);
-
-      // Wait for sheet to close completely, then navigate
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const nav = document.querySelector('nav');
-          const headerHeight = nav ? nav.offsetHeight : 80;
-          const elementPosition = element.offsetTop - headerHeight - 20; // Extra 20px spacing
-
-          // Force scroll to target section after menu is fully closed
-          window.scrollTo({
-            top: Math.max(0, elementPosition),
-            behavior: 'smooth',
-          });
-        }
-      }, 400); // Wait for sheet close animation to complete
-    } else {
-      // Desktop behavior remains unchanged
-      scrollToSection(sectionId);
-    }
-  };
-
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + slideShowImages.length) % slideShowImages.length);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % slideShowImages.length);
   };
 
   return (
@@ -98,12 +61,9 @@ export function HeroSection() {
               animate={{opacity: 1, y: 0}}
               transition={{duration: 0.5, delay: 0.2}}
             >
-              <button
-                onClick={() => scrollToSection('despre')}
-                className="text-gray-700 hover:text-pink-500 transition-colors duration-200"
-              >
+              <a href="#despre" className="text-gray-700 hover:text-pink-500 transition-colors duration-200">
                 Despre
-              </button>
+              </a>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -117,51 +77,21 @@ export function HeroSection() {
                   sideOffset={8}
                   className="w-64 bg-white/95 backdrop-blur-sm border-pink-100 shadow-xl rounded-xl p-2"
                 >
-                  <DropdownMenuItem
-                    onClick={() => scrollToSection('buchete')}
-                    className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50"
-                  >
-                    Buchete Personalizate
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => scrollToSection('aranjamente')}
-                    className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50"
-                  >
-                    Aranjamente Florale
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => scrollToSection('mireasa')}
-                    className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50"
-                  >
-                    Buchete de Mireasă
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => scrollToSection('evenimente')}
-                    className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50"
-                  >
-                    Aranjamente Evenimente
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => scrollToSection('funerare')}
-                    className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50"
-                  >
-                    Aranjamente Funerare
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => scrollToSection('ingrijire-plante')}
-                    className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50"
-                  >
-                    Îngrijirea Plantelor
-                  </DropdownMenuItem>
+                  {sections.map(section => (
+                    <a
+                      key={section.id}
+                      href={`#${section.id}`}
+                      className="text-gray-700 hover:text-pink-500 focus:text-pink-500 cursor-pointer py-3 px-4 mx-1 my-1 rounded-lg transition-all duration-200 hover:bg-pink-50/50 block"
+                    >
+                      {section.title}
+                    </a>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="text-gray-700 hover:text-pink-500 transition-colors duration-200"
-              >
+              <a href="#contact" className="text-gray-700 hover:text-pink-500 transition-colors duration-200">
                 Contact
-              </button>
+              </a>
             </motion.div>
 
             <motion.div
@@ -220,54 +150,27 @@ export function HeroSection() {
                       <div className="space-y-4">
                         <h3 className="hidden lg:block font-medium text-gray-800">Serviciile Noastre</h3>
                         <div className="space-y-3">
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('despre')}
+                          <a
+                            href="#despre"
                             className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
                           >
                             Despre Noi
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('buchete')}
-                            className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
-                          >
-                            Buchete Personalizate
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('aranjamente')}
-                            className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
-                          >
-                            Aranjamente Florale
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('mireasa')}
-                            className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
-                          >
-                            Buchete de Mireasă
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('evenimente')}
-                            className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
-                          >
-                            Aranjamente Evenimente
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('funerare')}
-                            className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
-                          >
-                            Aranjamente Funerare
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('ingrijire-plante')}
-                            className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
-                          >
-                            Îngrijirea Plantelor
-                          </button>
-                          <button
-                            onClick={() => scrollToSectionAndCloseMenu('contact')}
+                          </a>
+                          {sections.map(section => (
+                            <a
+                              key={section.id}
+                              href={`#${section.id}`}
+                              className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
+                            >
+                              {section.title}
+                            </a>
+                          ))}
+                          <a
+                            href="#contact"
                             className="block w-full text-center lg:text-left text-gray-600 hover:text-pink-500 transition-colors py-2"
                           >
                             Contact
-                          </button>
+                          </a>
                         </div>
                       </div>
 
@@ -362,15 +265,15 @@ export function HeroSection() {
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 0.8, delay: 1.0}}
               >
-                <motion.button
+                <motion.a
+                  href="#contact"
                   className="relative inline-flex items-center bg-pink-700 hover:bg-pink-800 px-6 py-3 rounded-full transition-all duration-200 text-white z-10"
                   whileHover={{y: -2}}
                   whileTap={{scale: 0.95}}
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})}
                 >
                   <MessageCircle className="h-5 w-5 mr-2 relative z-20" />
                   <span className="relative z-20">Scrie-ne un mesaj</span>
-                </motion.button>
+                </motion.a>
               </motion.div>
             </motion.div>
 

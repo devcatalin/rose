@@ -3154,3 +3154,13 @@ html {
       rotate(var(--tw-exit-rotate, 0));
   }
 }
+
+/* Smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset scroll position to account for fixed header */
+section[id] {
+  scroll-margin-top: 100px; /* Adjust based on your header height + some spacing */
+}

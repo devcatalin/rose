@@ -112,13 +112,13 @@ export function ContentSection({
     </motion.div>
   );
 
+  // Check if this section needs special decorative elements
+  const needsDecorations = id && (id.includes('funerare') || id.includes('mireasa') || id.includes('buchete'));
+
   return (
-    <section
-      id={id}
-      className={`py-20 ${backgroundGradient} ${['funerare', 'mireasa', 'buchete'].includes(id) ? 'relative overflow-hidden' : ''}`}
-    >
+    <section id={id} className={`py-20 ${backgroundGradient} ${needsDecorations ? 'relative overflow-hidden' : ''}`}>
       {/* Floating decorative elements - only for specific sections */}
-      {['funerare', 'mireasa', 'buchete'].includes(id ?? '') && (
+      {needsDecorations && (
         <>
           <motion.div
             className="absolute top-16 left-12 w-16 h-16 bg-pink-200/30 rounded-full backdrop-blur-sm"
@@ -148,9 +148,7 @@ export function ContentSection({
         </>
       )}
 
-      <div
-        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${['funerare', 'mireasa', 'buchete'].includes(id ?? '') ? 'relative z-10' : ''}`}
-      >
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${needsDecorations ? 'relative z-10' : ''}`}>
         <div className={`grid ${gridCols} gap-16 items-center`}>
           {isImageLeft ? (
             <>

@@ -1,7 +1,12 @@
-import {Heart, Mail, MapPin, Phone} from 'lucide-react';
+import type {ContentSection} from '@/data/types';
+import {Heart, MapPin, Phone} from 'lucide-react';
 import {motion} from 'motion/react';
 
-export function Footer() {
+interface FooterProps {
+  sections: ContentSection[];
+}
+
+export function Footer({sections}: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -35,32 +40,13 @@ export function Footer() {
           >
             <h3 className="text-2xl font-medium mb-4">Serviciile Noastre</h3>
             <ul className="space-y-2 text-gray-300">
-              <li>
-                <a href="#buchete" className="hover:text-pink-400 transition-colors duration-200">
-                  Buchete Personalizate
-                </a>
-              </li>
-              <li>
-                <a href="#aranjamente" className="hover:text-pink-400 transition-colors duration-200">
-                  Aranjamente Florale
-                </a>
-              </li>
-              <li>
-                <a href="#mireasa" className="hover:text-pink-400 transition-colors duration-200">
-                  Buchete de Mireasă
-                </a>
-              </li>
-              <li>
-                <a href="#evenimente" className="hover:text-pink-400 transition-colors duration-200">
-                  Evenimente Speciale
-                </a>
-              </li>
-              <li>
-                <span className="text-gray-400">Aranjamente Funerare</span>
-              </li>
-              <li>
-                <span className="text-gray-400">Sfaturi Îngrijire Plante</span>
-              </li>
+              {sections.map(section => (
+                <li key={section.id}>
+                  <a href={`#${section.id}`} className="hover:text-pink-400 transition-colors duration-200">
+                    {section.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </motion.div>
 
