@@ -42,13 +42,13 @@ sections:
       - title: Floraria Hortensia
         description: Flower shop website
         icon: fas fa-flower-tulip
-        url: https://floraria-hortensia.devcatalin.com
+        url: https://florariahortensia.ro
         target: newtab
         statusCheck: true
       - title: Pizza Gioco
         description: Pizza restaurant website
         icon: fas fa-pizza-slice
-        url: https://pizza-gioco.devcatalin.com
+        url: https://pizzagioco.ro
         target: newtab
         statusCheck: true
 
