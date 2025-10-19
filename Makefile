@@ -1,4 +1,4 @@
-.PHONY: help vps vps-status vps-logs vps-ssh deploy build-local
+.PHONY: help vps vps-status vps-logs vps-ssh deploy build-local cms-snapshot
 
 # Default target - show help
 help:
@@ -9,6 +9,9 @@ help:
 	@echo "  make vps-status  - Check status of all services on VPS"
 	@echo "  make vps-logs    - View logs from all services"
 	@echo "  make vps-ssh     - SSH into the VPS"
+	@echo ""
+	@echo "CMS Management:"
+	@echo "  make cms-snapshot - Update Directus schema snapshot from VPS"
 	@echo ""
 	@echo "Deployment:"
 	@echo "  make deploy      - Deploy latest changes (via GitHub Actions)"
@@ -49,3 +52,8 @@ vps-logs:
 vps-ssh:
 	@echo "🔐 Connecting to VPS..."
 	@ssh -i ~/.ssh/deploy_vps_key deploy@49.12.112.245
+
+# Update Directus schema snapshot
+cms-snapshot:
+	@echo "📸 Updating Directus schema snapshot..."
+	@./platform/scripts/update_snapshot.sh
