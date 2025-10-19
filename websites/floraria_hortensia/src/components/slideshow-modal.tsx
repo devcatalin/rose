@@ -7,7 +7,6 @@ import {ImageWithFallback} from './figma/ImageWithFallback';
 
 interface SlideImage {
   src: string;
-  alt: string;
   description: string;
 }
 
@@ -111,7 +110,7 @@ export function SlideshowModal({isOpen, onClose, images, sectionTitle}: Slidesho
               >
                 <ImageWithFallback
                   src={images[currentSlide].src}
-                  alt={images[currentSlide].alt}
+                  alt={images[currentSlide].description}
                   className="w-full h-full object-contain"
                 />
               </motion.div>

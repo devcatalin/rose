@@ -1,8 +1,7 @@
 // Type definitions for floraria_hortensia app data
 
-export interface SlideshowImage {
+export interface GalleryImage {
   src: string;
-  alt: string;
   description: string;
 }
 
@@ -31,15 +30,5 @@ export interface ContentSection {
   buttonHref?: string;
   imagePosition: 'left' | 'right';
   backgroundGradient: string;
+  gallery: GalleryImage[];
 }
-
-export type SlideshowDataKey =
-  | 'despre'
-  | 'buchete'
-  | 'aranjamente'
-  | 'mireasa'
-  | 'evenimente'
-  | 'funerare'
-  | 'ingrijire-plante';
-
-export type SlideshowData = Record<SlideshowDataKey, SlideshowImage[]>;

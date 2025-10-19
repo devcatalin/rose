@@ -7,11 +7,10 @@ import {Footer} from '@/components/footer';
 import {HeroSection} from '@/components/hero-section';
 import {MobileCarousel} from '@/components/mobile-carousel';
 import {SlideshowModal} from '@/components/slideshow-modal';
-import {contentSections, slideshowData} from '@/data';
-import type {SlideshowDataKey} from '@/data';
+import {contentSections} from '@/data';
 
 // Data has been extracted to separate files in the data folder
-// See: src/data/slideshowData.ts, src/data/contentSections.ts
+// See: src/data/contentSections.ts
 
 export default function App() {
   const [currentSlideshow, setCurrentSlideshow] = useState<string | null>(null);
@@ -47,7 +46,7 @@ export default function App() {
         <SlideshowModal
           isOpen={!!currentSlideshow}
           onClose={closeSlideshow}
-          images={slideshowData[currentSlideshow as SlideshowDataKey] || []}
+          images={contentSections.find(s => s.id === currentSlideshow)?.gallery || []}
           sectionTitle={contentSections.find(s => s.id === currentSlideshow)?.title || ''}
         />
       )}
