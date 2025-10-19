@@ -36,7 +36,14 @@ ssh -i "$SSH_KEY" "$VPS_USER@$VPS_HOST" << 'ENDSSH'
     # Copy snapshot from container to host
     docker cp cms:/tmp/snapshot.yaml /tmp/snapshot.yaml
     
-    echo "✅ Snapshot created and copied to VPS host at /tmp/snapshot.yaml"
+    # Verify the file exists and show its size
+    if [[ -f /tmp/snapshot.yaml ]]; then
+        ls -lh /tmp/snapshot.yaml
+        echo "✅ Snapshot created and copied to VPS host at /tmp/snapshot.yaml"
+    else
+        echo "❌ Failed to copy snapshot from container to host"
+        exit 1
+    fi
 ENDSSH
 
 if [[ $? -ne 0 ]]; then

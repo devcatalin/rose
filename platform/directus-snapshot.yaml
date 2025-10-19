@@ -2,6 +2,126 @@ version: 1
 directus: 11.3.3
 vendor: postgres
 collections:
+  - collection: gioco_details
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gioco_details
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gioco_details
+  - collection: gioco_menu_categories
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gioco_menu_categories
+      color: null
+      display_template: '{{category}}'
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: Gioco Items
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: sort
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gioco_menu_categories
+  - collection: gioco_menu_items
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gioco_menu_items
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gioco_menu_items
+  - collection: gioco_menu_items_gioco_menu_categories
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gioco_menu_items_gioco_menu_categories
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gioco_menu_items_gioco_menu_categories
+  - collection: gioco_offers
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gioco_offers
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: sort
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gioco_offers
   - collection: hortensia_about
     meta:
       accountability: all
@@ -11,10 +131,10 @@ collections:
       collapse: open
       collection: hortensia_about
       color: null
-      display_template: null
+      display_template: '{{title}}'
       group: null
       hidden: false
-      icon: null
+      icon: info
       item_duplication_fields: null
       note: null
       preview_url: null
@@ -38,7 +158,7 @@ collections:
       display_template: null
       group: null
       hidden: false
-      icon: null
+      icon: local_florist
       item_duplication_fields: null
       note: null
       preview_url: null
@@ -83,10 +203,10 @@ collections:
       collapse: open
       collection: hortensia_gallery
       color: null
-      display_template: null
+      display_template: '{{description}}'
       group: null
       hidden: false
-      icon: null
+      icon: photo_library
       item_duplication_fields: null
       note: null
       preview_url: null
@@ -107,10 +227,10 @@ collections:
       collapse: open
       collection: hortensia_sections
       color: null
-      display_template: null
+      display_template: '{{title}}'
       group: null
       hidden: false
-      icon: null
+      icon: view_module
       item_duplication_fields: null
       note: null
       preview_url: null
@@ -147,6 +267,880 @@ collections:
     schema:
       name: hortensia_sections_hortensia_gallery
 fields:
+  - collection: gioco_details
+    field: id
+    type: integer
+    meta:
+      collection: gioco_details
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gioco_details
+      data_type: integer
+      default_value: nextval('gioco_details_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_details
+    field: title
+    type: string
+    meta:
+      collection: gioco_details
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: gioco_details
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_details
+    field: about
+    type: text
+    meta:
+      collection: gioco_details
+      conditions: null
+      display: null
+      display_options: null
+      field: about
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: about
+      table: gioco_details
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_details
+    field: schedule
+    type: text
+    meta:
+      collection: gioco_details
+      conditions: null
+      display: null
+      display_options: null
+      field: schedule
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: schedule
+      table: gioco_details
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_details
+    field: phone_number
+    type: string
+    meta:
+      collection: gioco_details
+      conditions: null
+      display: null
+      display_options: null
+      field: phone_number
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 5
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: phone_number
+      table: gioco_details
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_categories
+    field: id
+    type: integer
+    meta:
+      collection: gioco_menu_categories
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gioco_menu_categories
+      data_type: integer
+      default_value: nextval('gioco_menu_categories_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_categories
+    field: sort
+    type: integer
+    meta:
+      collection: gioco_menu_categories
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: gioco_menu_categories
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_categories
+    field: category
+    type: string
+    meta:
+      collection: gioco_menu_categories
+      conditions: null
+      display: null
+      display_options: null
+      field: category
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: category
+      table: gioco_menu_categories
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items
+    field: id
+    type: integer
+    meta:
+      collection: gioco_menu_items
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gioco_menu_items
+      data_type: integer
+      default_value: nextval('gioco_menu_items_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items
+    field: title
+    type: string
+    meta:
+      collection: gioco_menu_items
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: gioco_menu_items
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items
+    field: image
+    type: uuid
+    meta:
+      collection: gioco_menu_items
+      conditions: null
+      display: null
+      display_options: null
+      field: image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options:
+        folder: a6c4180c-4ca8-48f8-b5e9-0baa20fdd743
+      readonly: false
+      required: true
+      sort: 6
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: image
+      table: gioco_menu_items
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: gioco_menu_items
+    field: description
+    type: text
+    meta:
+      collection: gioco_menu_items
+      conditions: null
+      display: null
+      display_options: null
+      field: description
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: description
+      table: gioco_menu_items
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items
+    field: category
+    type: integer
+    meta:
+      collection: gioco_menu_items
+      conditions: null
+      display: null
+      display_options: null
+      field: category
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 7
+      special:
+        - m2o
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: category
+      table: gioco_menu_items
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: gioco_menu_categories
+      foreign_key_column: id
+  - collection: gioco_menu_items
+    field: price
+    type: string
+    meta:
+      collection: gioco_menu_items
+      conditions: null
+      display: null
+      display_options: null
+      field: price
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 8
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: price
+      table: gioco_menu_items
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items
+    field: price_small
+    type: string
+    meta:
+      collection: gioco_menu_items
+      conditions:
+        - hidden: false
+          name: Show price_small only for Pizza category
+          options:
+            clear: false
+            font: sans-serif
+            masked: false
+            slug: false
+            trim: false
+          required: true
+          rule:
+            _and:
+              - category:
+                  _eq: '1'
+      display: null
+      display_options: null
+      field: price_small
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 9
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: price_small
+      table: gioco_menu_items
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items_gioco_menu_categories
+    field: id
+    type: integer
+    meta:
+      collection: gioco_menu_items_gioco_menu_categories
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gioco_menu_items_gioco_menu_categories
+      data_type: integer
+      default_value: nextval('gioco_menu_items_gioco_menu_categories_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items_gioco_menu_categories
+    field: gioco_menu_items_id
+    type: integer
+    meta:
+      collection: gioco_menu_items_gioco_menu_categories
+      conditions: null
+      display: null
+      display_options: null
+      field: gioco_menu_items_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: gioco_menu_items_id
+      table: gioco_menu_items_gioco_menu_categories
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_menu_items_gioco_menu_categories
+    field: gioco_menu_categories_id
+    type: integer
+    meta:
+      collection: gioco_menu_items_gioco_menu_categories
+      conditions: null
+      display: null
+      display_options: null
+      field: gioco_menu_categories_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: gioco_menu_categories_id
+      table: gioco_menu_items_gioco_menu_categories
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_offers
+    field: id
+    type: integer
+    meta:
+      collection: gioco_offers
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gioco_offers
+      data_type: integer
+      default_value: nextval('gioco_offers_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_offers
+    field: sort
+    type: integer
+    meta:
+      collection: gioco_offers
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: gioco_offers
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_offers
+    field: title
+    type: string
+    meta:
+      collection: gioco_offers
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: gioco_offers
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_offers
+    field: subtitle
+    type: string
+    meta:
+      collection: gioco_offers
+      conditions: null
+      display: null
+      display_options: null
+      field: subtitle
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: subtitle
+      table: gioco_offers
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: hortensia_about
     field: id
     type: integer
@@ -465,15 +1459,15 @@ fields:
     meta:
       collection: hortensia_details
       conditions: null
-      display: null
-      display_options: null
+      display: related-values
+      display_options:
+        template: '{{hortensia_gallery_id.id}}{{hortensia_gallery_id.description}}'
       field: slideshow
       group: null
       hidden: false
       interface: list-m2m
       note: null
-      options:
-        enableLink: true
+      options: {}
       readonly: false
       required: false
       sort: 6
@@ -691,7 +1685,8 @@ fields:
       hidden: false
       interface: file-image
       note: null
-      options: null
+      options:
+        folder: 6a170a73-ecf7-4e26-b9e5-8577f9152e40
       readonly: false
       required: true
       sort: 3
@@ -888,7 +1883,7 @@ fields:
       interface: file-image
       note: null
       options:
-        folder: null
+        folder: 6a170a73-ecf7-4e26-b9e5-8577f9152e40
       readonly: false
       required: true
       sort: 4
@@ -978,7 +1973,7 @@ fields:
       conditions: null
       display: related-values
       display_options:
-        template: '{{hortensia_gallery_id.description}}'
+        template: '{{hortensia_gallery_id.id}}{{hortensia_gallery_id.description}}'
       field: gallery
       group: null
       hidden: false
@@ -1192,6 +2187,48 @@ fields:
       foreign_key_table: hortensia_gallery
       foreign_key_column: id
 relations:
+  - collection: gioco_menu_items
+    field: image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: gioco_menu_items
+      many_field: image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: gioco_menu_items
+      column: image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: gioco_menu_items_image_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: gioco_menu_items
+    field: category
+    related_collection: gioco_menu_categories
+    meta:
+      junction_field: null
+      many_collection: gioco_menu_items
+      many_field: category
+      one_allowed_collections: null
+      one_collection: gioco_menu_categories
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: gioco_menu_items
+      column: category
+      foreign_key_table: gioco_menu_categories
+      foreign_key_column: id
+      constraint_name: gioco_menu_items_category_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
   - collection: hortensia_details_hortensia_gallery
     field: hortensia_gallery_id
     related_collection: hortensia_gallery
