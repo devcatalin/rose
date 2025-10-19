@@ -3,7 +3,7 @@ import type {HortensiaSection} from '@/lib/directus';
 import {useDirectusItems} from './useDirectusItems';
 
 /**
- * Custom hook specifically for fetching hortensia sections
+ * Custom hook specifically for fetching hortensia sections with all related data
  * This is a convenience wrapper around useDirectusItems
  *
  * @example
@@ -13,7 +13,12 @@ import {useDirectusItems} from './useDirectusItems';
  */
 export function useDirectusSections() {
   return useDirectusItems<HortensiaSection>('hortensia_sections', {
-    fields: ['id', 'title'],
-    sort: ['title'],
+    fields: [
+      '*', // Get all base fields
+      'image.*', // Get all image fields
+      'gallery.hortensia_gallery_id.*', // Get all gallery item fields
+      'gallery.hortensia_gallery_id.image.*', // Get all gallery image fields
+    ],
+    sort: ['id'],
   });
 }

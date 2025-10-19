@@ -43,15 +43,24 @@ export function useDirectusItems<T = any>(
       setLoading(true);
       setError(null);
 
-      const result = await directus.request(
-        readItems(collection as any, {
-          fields: options.fields || ['*'],
-          filter: options.filter,
-          sort: options.sort,
-          limit: options.limit ?? -1, // -1 means get all items
-          offset: options.offset,
-        })
-      );
+      // Build query options, only including defined values
+      const queryOptions: any = {
+        fields: options.fields || ['*'],
+        limit: options.limit ?? -1, // -1 means get all items
+      };
+
+      // Only add optional parameters if they're defined
+      if (options.filter) {
+        queryOptions.filter = options.filter;
+      }
+      if (options.sort) {
+        queryOptions.sort = options.sort;
+      }
+      if (options.offset !== undefined) {
+        queryOptions.offset = options.offset;
+      }
+
+      const result = await directus.request(readItems(collection as any, queryOptions));
 
       setData(result as T[]);
     } catch (err) {

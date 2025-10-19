@@ -7,13 +7,15 @@ import {Footer} from '@/components/footer';
 import {HeroSection} from '@/components/hero-section';
 import {MobileCarousel} from '@/components/mobile-carousel';
 import {SlideshowModal} from '@/components/slideshow-modal';
-import {contentSections} from '@/data';
+import {useDirectusSections} from '@/hooks/useDirectusSections';
+import {transformDirectusSections} from '@/lib/transformers';
 
-// Data has been extracted to separate files in the data folder
-// See: src/data/contentSections.ts
+// Static data kept for reference in src/data/contentSections.ts
+// Website now uses data from Directus CMS
 
 export default function App() {
   const [currentSlideshow, setCurrentSlideshow] = useState<string | null>(null);
+  const {data: directusSections, loading, error} = useDirectusSections();
 
   const openSlideshow = (sectionId: string) => {
     setCurrentSlideshow(sectionId);
@@ -23,11 +25,44 @@ export default function App() {
     setCurrentSlideshow(null);
   };
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+          <p className="mt-4 text-gray-600">Se încarcă...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || !directusSections) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center max-w-md px-4">
+          <div className="text-red-600 text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Eroare la încărcare</h2>
+          <p className="text-gray-600 mb-4">Nu am putut încărca datele de la server. Vă rugăm să reîncărcați pagina.</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Reîncarcă pagina
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const sections = transformDirectusSections(directusSections);
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <HeroSection />
       <MobileCarousel />
-      {contentSections.map((section, index) => {
+      {sections.map((section, index) => {
         // Compute background gradient based on pattern
         let backgroundGradient =
           index % 2 === 0 ? 'bg-white' : 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50';
@@ -56,8 +91,8 @@ export default function App() {
         <SlideshowModal
           isOpen={!!currentSlideshow}
           onClose={closeSlideshow}
-          images={contentSections.find(s => s.id === currentSlideshow)?.gallery || []}
-          sectionTitle={contentSections.find(s => s.id === currentSlideshow)?.title || ''}
+          images={sections.find(s => s.id === currentSlideshow)?.gallery || []}
+          sectionTitle={sections.find(s => s.id === currentSlideshow)?.title || ''}
         />
       )}
     </div>

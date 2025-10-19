@@ -1,0 +1,1281 @@
+version: 1
+directus: 11.3.3
+vendor: postgres
+collections:
+  - collection: hortensia_about
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_about
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 2
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: hortensia_about
+  - collection: hortensia_details
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_details
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: 1
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: hortensia_details
+  - collection: hortensia_details_hortensia_gallery
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_details_hortensia_gallery
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: hortensia_details_hortensia_gallery
+  - collection: hortensia_gallery
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_gallery
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 4
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: hortensia_gallery
+  - collection: hortensia_sections
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_sections
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 3
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: true
+    schema:
+      name: hortensia_sections
+  - collection: hortensia_sections_hortensia_gallery
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_sections_hortensia_gallery
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 5
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: hortensia_sections_hortensia_gallery
+fields:
+  - collection: hortensia_about
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_about
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_about
+      data_type: integer
+      default_value: nextval('hortensia_about_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_about
+    field: icon
+    type: string
+    meta:
+      collection: hortensia_about
+      conditions: null
+      display: null
+      display_options: null
+      field: icon
+      group: null
+      hidden: false
+      interface: select-icon
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: icon
+      table: hortensia_about
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_about
+    field: title
+    type: string
+    meta:
+      collection: hortensia_about
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: hortensia_about
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_about
+    field: description
+    type: string
+    meta:
+      collection: hortensia_about
+      conditions: null
+      display: null
+      display_options: null
+      field: description
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: description
+      table: hortensia_about
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_details
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_details
+      data_type: integer
+      default_value: nextval('hortensia_details_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details
+    field: primary_phone_number
+    type: string
+    meta:
+      collection: hortensia_details
+      conditions: null
+      display: null
+      display_options: null
+      field: primary_phone_number
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: primary_phone_number
+      table: hortensia_details
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details
+    field: secondary_phone_number
+    type: string
+    meta:
+      collection: hortensia_details
+      conditions: null
+      display: null
+      display_options: null
+      field: secondary_phone_number
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: secondary_phone_number
+      table: hortensia_details
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details
+    field: schedule
+    type: text
+    meta:
+      collection: hortensia_details
+      conditions: null
+      display: null
+      display_options: null
+      field: schedule
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 5
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: schedule
+      table: hortensia_details
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details
+    field: slideshow
+    type: alias
+    meta:
+      collection: hortensia_details
+      conditions: null
+      display: null
+      display_options: null
+      field: slideshow
+      group: null
+      hidden: false
+      interface: list-m2m
+      note: null
+      options:
+        enableLink: true
+      readonly: false
+      required: false
+      sort: 6
+      special:
+        - m2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: hortensia_details
+    field: short_about
+    type: text
+    meta:
+      collection: hortensia_details
+      conditions: null
+      display: null
+      display_options: null
+      field: short_about
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: short_about
+      table: hortensia_details
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details_hortensia_gallery
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_details_hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_details_hortensia_gallery
+      data_type: integer
+      default_value: nextval('hortensia_details_hortensia_gallery_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_details_hortensia_gallery
+    field: hortensia_details_id
+    type: integer
+    meta:
+      collection: hortensia_details_hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: hortensia_details_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: hortensia_details_id
+      table: hortensia_details_hortensia_gallery
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: hortensia_details
+      foreign_key_column: id
+  - collection: hortensia_details_hortensia_gallery
+    field: hortensia_gallery_id
+    type: integer
+    meta:
+      collection: hortensia_details_hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: hortensia_gallery_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: hortensia_gallery_id
+      table: hortensia_details_hortensia_gallery
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: hortensia_gallery
+      foreign_key_column: id
+  - collection: hortensia_gallery
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_gallery
+      data_type: integer
+      default_value: nextval('hortensia_gallery_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_gallery
+    field: image
+    type: uuid
+    meta:
+      collection: hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: image
+      table: hortensia_gallery
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: hortensia_gallery
+    field: description
+    type: string
+    meta:
+      collection: hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: description
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: description
+      table: hortensia_gallery
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_sections
+      data_type: integer
+      default_value: nextval('hortensia_sections_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections
+    field: title
+    type: string
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: hortensia_sections
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections
+    field: description
+    type: text
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: null
+      display_options: null
+      field: description
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: description
+      table: hortensia_sections
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections
+    field: image
+    type: uuid
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: null
+      display_options: null
+      field: image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options:
+        folder: null
+      readonly: false
+      required: true
+      sort: 4
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: image
+      table: hortensia_sections
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: hortensia_sections
+    field: bulletPoints
+    type: json
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: null
+      display_options: null
+      field: bulletPoints
+      group: null
+      hidden: false
+      interface: list
+      note: Only the first 4 entries will appear on the website
+      options:
+        addLabel: Add new bullet point
+        fields:
+          - field: text
+            meta:
+              display: null
+              field: text
+              interface: input
+              options:
+                iconRight: format_list_bulleted
+                softLength: 40
+              required: true
+              type: text
+              width: full
+            name: text
+            type: text
+      readonly: false
+      required: true
+      sort: 5
+      special:
+        - cast-json
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: bulletPoints
+      table: hortensia_sections
+      data_type: json
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections
+    field: gallery
+    type: alias
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{hortensia_gallery_id.description}}'
+      field: gallery
+      group: null
+      hidden: false
+      interface: list-m2m
+      note: null
+      options:
+        enableLink: true
+      readonly: false
+      required: false
+      sort: 6
+      special:
+        - m2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: hortensia_sections
+    field: note
+    type: string
+    meta:
+      collection: hortensia_sections
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        placeholder: Optional note
+      readonly: false
+      required: false
+      sort: 7
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: note
+      table: hortensia_sections
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections_hortensia_gallery
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_sections_hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_sections_hortensia_gallery
+      data_type: integer
+      default_value: nextval('hortensia_sections_hortensia_gallery_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_sections_hortensia_gallery
+    field: hortensia_sections_id
+    type: integer
+    meta:
+      collection: hortensia_sections_hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: hortensia_sections_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: hortensia_sections_id
+      table: hortensia_sections_hortensia_gallery
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: hortensia_sections
+      foreign_key_column: id
+  - collection: hortensia_sections_hortensia_gallery
+    field: hortensia_gallery_id
+    type: integer
+    meta:
+      collection: hortensia_sections_hortensia_gallery
+      conditions: null
+      display: null
+      display_options: null
+      field: hortensia_gallery_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: hortensia_gallery_id
+      table: hortensia_sections_hortensia_gallery
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: hortensia_gallery
+      foreign_key_column: id
+relations:
+  - collection: hortensia_details_hortensia_gallery
+    field: hortensia_gallery_id
+    related_collection: hortensia_gallery
+    meta:
+      junction_field: hortensia_details_id
+      many_collection: hortensia_details_hortensia_gallery
+      many_field: hortensia_gallery_id
+      one_allowed_collections: null
+      one_collection: hortensia_gallery
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: hortensia_details_hortensia_gallery
+      column: hortensia_gallery_id
+      foreign_key_table: hortensia_gallery
+      foreign_key_column: id
+      constraint_name: hortensia_details_hortensia_gallery_horten__67983f27_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: hortensia_details_hortensia_gallery
+    field: hortensia_details_id
+    related_collection: hortensia_details
+    meta:
+      junction_field: hortensia_gallery_id
+      many_collection: hortensia_details_hortensia_gallery
+      many_field: hortensia_details_id
+      one_allowed_collections: null
+      one_collection: hortensia_details
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: slideshow
+      sort_field: null
+    schema:
+      table: hortensia_details_hortensia_gallery
+      column: hortensia_details_id
+      foreign_key_table: hortensia_details
+      foreign_key_column: id
+      constraint_name: hortensia_details_hortensia_gallery_horten__7fb60fe9_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: hortensia_gallery
+    field: image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: hortensia_gallery
+      many_field: image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: hortensia_gallery
+      column: image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: hortensia_gallery_image_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: hortensia_sections
+    field: image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: hortensia_sections
+      many_field: image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: hortensia_sections
+      column: image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: hortensia_sections_image_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: hortensia_sections_hortensia_gallery
+    field: hortensia_gallery_id
+    related_collection: hortensia_gallery
+    meta:
+      junction_field: hortensia_sections_id
+      many_collection: hortensia_sections_hortensia_gallery
+      many_field: hortensia_gallery_id
+      one_allowed_collections: null
+      one_collection: hortensia_gallery
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: hortensia_sections_hortensia_gallery
+      column: hortensia_gallery_id
+      foreign_key_table: hortensia_gallery
+      foreign_key_column: id
+      constraint_name: hortensia_sections_hortensia_gallery_horte__6ddf429f_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: hortensia_sections_hortensia_gallery
+    field: hortensia_sections_id
+    related_collection: hortensia_sections
+    meta:
+      junction_field: hortensia_gallery_id
+      many_collection: hortensia_sections_hortensia_gallery
+      many_field: hortensia_sections_id
+      one_allowed_collections: null
+      one_collection: hortensia_sections
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: gallery
+      sort_field: null
+    schema:
+      table: hortensia_sections_hortensia_gallery
+      column: hortensia_sections_id
+      foreign_key_table: hortensia_sections
+      foreign_key_column: id
+      constraint_name: hortensia_sections_hortensia_gallery_horte__22edefc3_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
