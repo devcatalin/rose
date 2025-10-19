@@ -29,39 +29,6 @@ import type {ContentSection} from './types';
 
 export const contentSections: ContentSection[] = [
   {
-    id: 'despre',
-    title: 'Despre Florăria Hortensia',
-    description:
-      'Din februarie 2024, Florăria Hortensia aduce bucurie și culoare în viețile oamenilor prin aranjamente florale unice, realizate cu pasiune și dedicare.',
-    image: {
-      src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmbG93ZXIlMjBzaG9wJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzU4MTE4NDUzfDA&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Interior elegant al Florăriei Hortensia',
-    },
-    bulletPoints: [
-      {text: 'Flori proaspete zilnic'},
-      {text: 'Aranjamente personalizate'},
-      {text: 'Livrare în toată București'},
-      {text: 'Experiență și profesionalism'},
-    ],
-    buttonText: 'Vezi mai multe poze',
-    imagePosition: 'left',
-    backgroundGradient: 'bg-white',
-    gallery: [
-      {
-        src: 'https://images.unsplash.com/photo-1742399484633-4ffe32c347ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmbG93ZXIlMjBzaG9wJTIwaW50ZXJpb3IlMjBlbGVnYW50fGVufDF8fHx8MTc1ODE3NDY4Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        description: 'Spațiul nostru elegant și primitor',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1753982861953-9d83250dc213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmbG9yaXN0JTIwd29ya3NwYWNlJTIwZmxvd2Vyc3xlbnwxfHx8fDE3NTgxODEwMDd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        description: 'Atelierul nostru de creație',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmbG93ZXIlMjBzaG9wJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzU4MTE4NDUzfDA&ixlib=rb-4.1.0&q=80&w=1080',
-        description: 'Flori proaspete zilnic',
-      },
-    ],
-  },
-  {
     id: 'buchete',
     title: 'Buchete Personalizate',
     description:
@@ -76,10 +43,6 @@ export const contentSections: ContentSection[] = [
       {text: 'Combinații elegante și sofisticate'},
       {text: 'Felicitare handmade gratuită'},
     ],
-    buttonText: 'Vezi mai multe poze',
-    buttonHref: 'https://wa.me/40123456789',
-    imagePosition: 'right',
-    backgroundGradient: 'bg-white',
     gallery: [
       {
         src: bridesmaidsImage,
@@ -137,10 +100,6 @@ export const contentSections: ContentSection[] = [
       {text: 'Design personalizat'},
       {text: 'Materiale naturale premium'},
     ],
-    buttonText: 'Vezi mai multe poze',
-    buttonHref: 'https://wa.me/40123456789',
-    imagePosition: 'left',
-    backgroundGradient: 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50',
     gallery: [
       {
         src: corsagesImage,
@@ -174,10 +133,6 @@ export const contentSections: ContentSection[] = [
       {text: 'Adaptat stilului și culorilor'},
       {text: 'Consultanță specializată'},
     ],
-    buttonText: 'Vezi mai multe poze',
-    buttonHref: 'https://wa.me/40123456789',
-    imagePosition: 'right',
-    backgroundGradient: 'bg-white',
     gallery: [
       {
         src: newBridalBouquet,
@@ -227,10 +182,6 @@ export const contentSections: ContentSection[] = [
       {text: 'Flori vesele pentru zile de naștere'},
       {text: 'Evenimente corporate profesionale'},
     ],
-    buttonText: 'Vezi mai multe poze',
-    buttonHref: 'https://wa.me/40123456789',
-    imagePosition: 'left',
-    backgroundGradient: 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50',
     gallery: [
       {
         src: baptismCandleArrangement,
@@ -264,9 +215,6 @@ export const contentSections: ContentSection[] = [
       {text: 'Aranjamente pentru case de marcat'},
       {text: 'Livrare discretă și la timp'},
     ],
-    buttonText: 'Vezi mai multe poze',
-    imagePosition: 'right',
-    backgroundGradient: 'bg-gradient-to-br from-gray-50 to-white',
     gallery: [
       {
         src: 'https://images.unsplash.com/photo-1706282170042-a4229c2f6141?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmdW5lcmFsJTIwZmxvd2VycyUyMHdoaXRlJTIwcm9zZXN8ZW58MXx8fHwxNzU4MTE4NDUzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
@@ -288,10 +236,6 @@ export const contentSections: ContentSection[] = [
       {text: 'Prevenirea bolilor și dăunătorilor'},
       {text: 'Consultanță gratuită personalizată'},
     ],
-    buttonText: 'Vezi mai multe poze',
-    buttonHref: 'https://wa.me/40123456789',
-    imagePosition: 'left',
-    backgroundGradient: 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50',
     gallery: [
       {
         src: 'https://images.unsplash.com/photo-1621958206813-2e9c0441c5b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3VzZXBsYW50cyUyMGNhcmUlMjB3YXRlcmluZ3xlbnwxfHx8fDE3NTgxODEwMjh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',

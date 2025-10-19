@@ -26,9 +26,5 @@ export interface ContentSection {
   image: ContentImage;
   note?: ContentNote;
   bulletPoints: BulletPoint[];
-  buttonText: string;
-  buttonHref?: string;
-  imagePosition: 'left' | 'right';
-  backgroundGradient: string;
   gallery: GalleryImage[];
 }

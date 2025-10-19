@@ -27,16 +27,26 @@ export default function App() {
     <div className="min-h-screen overflow-x-hidden">
       <HeroSection />
       <MobileCarousel />
-      {contentSections
-        .filter(section => section.id !== 'despre')
-        .map(section => (
+      {contentSections.map((section, index) => {
+        // Compute background gradient based on pattern
+        let backgroundGradient =
+          index % 2 === 0 ? 'bg-white' : 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50';
+        if (section.id === 'funerare') {
+          backgroundGradient = 'bg-gradient-to-br from-gray-50 to-white';
+        }
+
+        return (
           <ContentSection
             key={section.id}
             {...section}
+            buttonText="Vezi mai multe poze"
+            imagePosition={index % 2 === 0 ? 'right' : 'left'}
+            backgroundGradient={backgroundGradient}
             buttonSpacing={section.id === 'funerare' ? 'normal' : 'extra'}
-            onClick={section.buttonText === 'Vezi mai multe poze' ? () => openSlideshow(section.id) : undefined}
+            onClick={() => openSlideshow(section.id)}
           />
-        ))}
+        );
+      })}
       <AboutSection />
       <ContactSection />
       <Footer />
