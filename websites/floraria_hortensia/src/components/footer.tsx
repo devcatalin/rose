@@ -1,12 +1,14 @@
 import type {ContentSection} from '@/data/types';
+import type {HortensiaDetails} from '@/lib/directus';
 import {Heart, MapPin, Phone} from 'lucide-react';
 import {motion} from 'motion/react';
 
 interface FooterProps {
   sections: ContentSection[];
+  siteDetails: HortensiaDetails;
 }
 
-export function Footer({sections}: FooterProps) {
+export function Footer({sections, siteDetails}: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -24,11 +26,8 @@ export function Footer({sections}: FooterProps) {
               <Heart className="h-8 w-8 text-pink-400" />
               <h3 className="text-3xl font-medium">Florăria Hortensia</h3>
             </div>
-            <p className="text-gray-300 leading-relaxed mb-4 font-light">
-              Credem în puterea florilor de a transmite emoție, frumusețe și autenticitate. Din februarie 2024, aducem
-              bucurie în viețile oamenilor prin aranjamente florale unice.
-            </p>
-            <p className="text-sm text-gray-400 font-light">Florile sunt naturale, atent alese și tratate.</p>
+            <p className="text-gray-300 leading-relaxed mb-4 font-light">{siteDetails.short_about}</p>
+            <p className="text-sm text-gray-400 font-light whitespace-pre-line">{siteDetails.schedule}</p>
           </motion.div>
 
           {/* Quick Links */}
@@ -61,14 +60,20 @@ export function Footer({sections}: FooterProps) {
             <div className="space-y-3 text-gray-300">
               <div className="flex items-center justify-center md:justify-start space-x-3">
                 <Phone className="h-5 w-5 text-pink-400" />
-                <a href="tel:+40773912063" className="hover:text-pink-400 transition-colors duration-200">
-                  0773 912 063
+                <a
+                  href={`tel:+${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
+                  className="hover:text-pink-400 transition-colors duration-200"
+                >
+                  {siteDetails.primary_phone_number}
                 </a>
               </div>
               <div className="flex items-center justify-center md:justify-start space-x-3">
                 <Phone className="h-5 w-5 text-pink-400" />
-                <a href="tel:+40774061032" className="hover:text-pink-400 transition-colors duration-200">
-                  0774 061 032
+                <a
+                  href={`tel:+${siteDetails.secondary_phone_number.replace(/\s/g, '')}`}
+                  className="hover:text-pink-400 transition-colors duration-200"
+                >
+                  {siteDetails.secondary_phone_number}
                 </a>
               </div>
               <div className="flex items-start justify-center md:justify-start space-x-3">
@@ -84,7 +89,7 @@ export function Footer({sections}: FooterProps) {
             {/* WhatsApp Button */}
             <div className="flex justify-center md:justify-start">
               <motion.a
-                href="https://wa.me/40773912063"
+                href={`https://wa.me/${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center bg-pink-700 hover:bg-pink-800 px-6 py-3 rounded-full transition-all duration-200 text-white mt-4"

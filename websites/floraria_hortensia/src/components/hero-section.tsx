@@ -10,6 +10,7 @@ import {ImageWithFallback} from '@/components/figma/ImageWithFallback';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from '@/components/ui/sheet';
 import type {ContentSection} from '@/data/types';
+import type {HortensiaDetails} from '@/lib/directus';
 import {ChevronDown, Flower, Menu, MessageCircle, Phone, X} from 'lucide-react';
 import {motion} from 'motion/react';
 
@@ -23,18 +24,36 @@ export const slideShowImages = [
 
 interface HeroSectionProps {
   sections: ContentSection[];
+  siteDetails: HortensiaDetails;
 }
 
-export function HeroSection({sections}: HeroSectionProps) {
+export function HeroSection({sections, siteDetails}: HeroSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sheetOpen, setSheetOpen] = useState(false);
 
+  // Get slideshow images from Directus or fall back to static images
+  const directusUrl = import.meta.env.VITE_DIRECTUS_URL || 'https://cms.devcatalin.com';
+  const slideshowImages =
+    siteDetails.slideshow && siteDetails.slideshow.length > 0
+      ? siteDetails.slideshow.map(item => {
+          const gallery = typeof item.hortensia_gallery_id === 'object' ? item.hortensia_gallery_id : null;
+          if (gallery && gallery.image) {
+            const imageId = typeof gallery.image === 'string' ? gallery.image : gallery.image.id;
+            return `${directusUrl}/assets/${imageId}`;
+          }
+          return '';
+        })
+      : slideShowImages;
+
+  // Filter out any empty strings
+  const validSlideshowImages = slideshowImages.filter(img => img !== '');
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % slideShowImages.length);
+      setCurrentSlide(prev => (prev + 1) % validSlideshowImages.length);
     }, 3000);
     return () => clearInterval(timer);
-  }, []);
+  }, [validSlideshowImages.length]);
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
@@ -128,20 +147,20 @@ export function HeroSection({sections}: HeroSectionProps) {
                         <h3 className="font-medium text-gray-800">Contact</h3>
                         <div className="space-y-2">
                           <a
-                            href="tel:+40773912063"
+                            href={`tel:+${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
                             onClick={() => window.innerWidth < 1024 && setSheetOpen(false)}
                             className="flex items-center justify-center lg:justify-start text-gray-600 hover:text-pink-500 transition-colors"
                           >
                             <Phone className="h-4 w-4 mr-2" />
-                            <span>0773 912 063</span>
+                            <span>{siteDetails.primary_phone_number}</span>
                           </a>
                           <a
-                            href="tel:+40774061032"
+                            href={`tel:+${siteDetails.secondary_phone_number.replace(/\s/g, '')}`}
                             onClick={() => window.innerWidth < 1024 && setSheetOpen(false)}
                             className="flex items-center justify-center lg:justify-start text-gray-600 hover:text-pink-500 transition-colors"
                           >
                             <Phone className="h-4 w-4 mr-2" />
-                            <span>0774 061 032</span>
+                            <span>{siteDetails.secondary_phone_number}</span>
                           </a>
                         </div>
                       </div>
@@ -177,7 +196,7 @@ export function HeroSection({sections}: HeroSectionProps) {
                       {/* WhatsApp Button */}
                       <div className="pt-4 flex justify-center lg:justify-start">
                         <a
-                          href="https://wa.me/40773912063"
+                          href={`https://wa.me/${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
                           onClick={() => window.innerWidth < 1024 && setSheetOpen(false)}
                           className="flex items-center justify-center bg-pink-700 hover:bg-pink-800 text-white px-3 py-2 rounded-full transition-colors text-sm"
                         >
@@ -191,16 +210,19 @@ export function HeroSection({sections}: HeroSectionProps) {
 
                 {/* Desktop phone number - hidden on mobile */}
                 <a
-                  href="tel:+40773912063"
+                  href={`tel:+${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
                   className="hidden lg:flex items-center text-gray-700 hover:text-pink-500 transition-colors duration-200"
                 >
                   <Phone className="h-4 w-4 mr-1" />
-                  <span>0773 912 063</span>
+                  <span>{siteDetails.primary_phone_number}</span>
                 </a>
                 <a
-                  href="tel:+40774061032"
+                  href={`tel:+${siteDetails.secondary_phone_number.replace(/\s/g, '')}`}
                   className="flex items-center text-gray-700 hover:text-pink-500 transition-colors duration-200"
-                ></a>
+                >
+                  <Phone className="h-4 w-4 mr-1" />
+                  <span>{siteDetails.secondary_phone_number}</span>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -234,8 +256,7 @@ export function HeroSection({sections}: HeroSectionProps) {
                   animate={{opacity: 1, y: 0}}
                   transition={{duration: 0.8, delay: 0.6}}
                 >
-                  Credem în puterea florilor de a transmite emoție, frumusețe și autenticitate. Fiecare aranjament spune
-                  o poveste unică.
+                  {siteDetails.short_about}
                 </motion.p>
               </div>
 
@@ -249,8 +270,8 @@ export function HeroSection({sections}: HeroSectionProps) {
                 <div className="flex items-start justify-center lg:justify-start space-x-3 text-gray-600">
                   <Phone className="h-5 w-5 text-pink-400 mt-1" />
                   <div className="flex flex-col space-y-1">
-                    <span>0773 912 063</span>
-                    <span>0774 061 032</span>
+                    <span>{siteDetails.primary_phone_number}</span>
+                    <span>{siteDetails.secondary_phone_number}</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-center lg:justify-start space-x-3 text-gray-600">
@@ -309,7 +330,7 @@ export function HeroSection({sections}: HeroSectionProps) {
         {/* Right Column - Full Height Slideshow (Hidden on Mobile) */}
         <div className="hidden lg:block relative h-full overflow-hidden">
           {/* Slideshow Images */}
-          {slideShowImages.map((image, index) => (
+          {validSlideshowImages.map((image, index) => (
             <motion.div
               key={index}
               className="absolute inset-0"
@@ -332,7 +353,7 @@ export function HeroSection({sections}: HeroSectionProps) {
           {/* Slide Indicators */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
             <div className="flex space-x-3">
-              {slideShowImages.map((_, index) => (
+              {validSlideshowImages.map((_, index) => (
                 <motion.button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
@@ -350,7 +371,7 @@ export function HeroSection({sections}: HeroSectionProps) {
           <div className="absolute top-8 right-8 z-20">
             <div className="bg-black/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
               <span className="text-sm font-medium">
-                {String(currentSlide + 1).padStart(2, '0')} / {String(slideShowImages.length).padStart(2, '0')}
+                {String(currentSlide + 1).padStart(2, '0')} / {String(validSlideshowImages.length).padStart(2, '0')}
               </span>
             </div>
           </div>

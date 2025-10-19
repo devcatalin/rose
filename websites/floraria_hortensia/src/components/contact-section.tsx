@@ -1,7 +1,12 @@
-import {Clock, Leaf, Mail, MapPin, Phone} from 'lucide-react';
+import type {HortensiaDetails} from '@/lib/directus';
+import {Clock, MapPin, Phone} from 'lucide-react';
 import {motion} from 'motion/react';
 
-export function ContactSection() {
+interface ContactSectionProps {
+  siteDetails: HortensiaDetails;
+}
+
+export function ContactSection({siteDetails}: ContactSectionProps) {
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-pink-50 to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,11 +44,17 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h4 className="mb-1 text-gray-800">Telefon</h4>
-                    <a href="tel:+40773912063" className="text-pink-600 hover:text-pink-700 transition-colors block">
-                      0773 912 063
+                    <a
+                      href={`tel:+${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
+                      className="text-pink-600 hover:text-pink-700 transition-colors block"
+                    >
+                      {siteDetails.primary_phone_number}
                     </a>
-                    <a href="tel:+40774061032" className="text-pink-600 hover:text-pink-700 transition-colors block">
-                      0774 061 032
+                    <a
+                      href={`tel:+${siteDetails.secondary_phone_number.replace(/\s/g, '')}`}
+                      className="text-pink-600 hover:text-pink-700 transition-colors block"
+                    >
+                      {siteDetails.secondary_phone_number}
                     </a>
                     <p className="text-sm text-gray-600 mt-1">Apeluri și WhatsApp</p>
                   </div>
@@ -73,8 +84,7 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h4 className="mb-1 text-gray-800">Program</h4>
-                    <p className="text-gray-700">Luni - Sâmbătă: 10:00-18:30</p>
-                    <p className="text-gray-700">Duminică: 10:00-16:00</p>
+                    <p className="text-gray-700 whitespace-pre-line">{siteDetails.schedule}</p>
                   </div>
                 </motion.div>
               </div>
@@ -102,7 +112,7 @@ export function ContactSection() {
               </div>
 
               <motion.a
-                href="https://wa.me/40773912063"
+                href={`https://wa.me/${siteDetails.primary_phone_number.replace(/\s/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center bg-pink-700 hover:bg-pink-800 px-6 py-3 rounded-full transition-all duration-200 text-white text-center md:text-left"

@@ -1,32 +1,54 @@
 import {useEffect, useState} from 'react';
 
+import type {HortensiaDetails} from '@/lib/directus';
 import {motion} from 'motion/react';
 
 import {ImageWithFallback} from './figma/ImageWithFallback';
 import {slideShowImages} from './hero-section';
 
-export function MobileCarousel() {
+interface MobileCarouselProps {
+  siteDetails: HortensiaDetails;
+}
+
+export function MobileCarousel({siteDetails}: MobileCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
+  // Get slideshow images from Directus or fall back to static images
+  const directusUrl = import.meta.env.VITE_DIRECTUS_URL || 'https://cms.devcatalin.com';
+  const slideshowImages =
+    siteDetails.slideshow && siteDetails.slideshow.length > 0
+      ? siteDetails.slideshow.map(item => {
+          const gallery = typeof item.hortensia_gallery_id === 'object' ? item.hortensia_gallery_id : null;
+          if (gallery && gallery.image) {
+            const imageId = typeof gallery.image === 'string' ? gallery.image : gallery.image.id;
+            return `${directusUrl}/assets/${imageId}`;
+          }
+          return '';
+        })
+      : slideShowImages;
+
+  // Filter out any empty strings
+  const validSlideshowImages = slideshowImages.filter(img => img !== '');
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % slideShowImages.length);
+      setCurrentSlide(prev => (prev + 1) % validSlideshowImages.length);
     }, 3000);
     return () => clearInterval(timer);
-  }, []);
+  }, [validSlideshowImages.length]);
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
 
   const prevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + slideShowImages.length) % slideShowImages.length);
+    setCurrentSlide(prev => (prev - 1 + validSlideshowImages.length) % validSlideshowImages.length);
   };
 
   const nextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % slideShowImages.length);
+    setCurrentSlide(prev => (prev + 1) % validSlideshowImages.length);
   };
 
   // Touch handlers for mobile swipe
@@ -62,7 +84,7 @@ export function MobileCarousel() {
       onTouchEnd={onTouchEnd}
     >
       {/* Slideshow Images */}
-      {slideShowImages.map((image, index) => (
+      {validSlideshowImages.map((image, index) => (
         <motion.div
           key={index}
           className="absolute inset-0"
@@ -85,7 +107,7 @@ export function MobileCarousel() {
       {/* Slide Indicators */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20">
         <div className="flex space-x-3">
-          {slideShowImages.map((_, index) => (
+          {validSlideshowImages.map((_, index) => (
             <motion.button
               key={index}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${

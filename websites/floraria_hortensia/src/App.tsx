@@ -7,6 +7,7 @@ import {Footer} from '@/components/footer';
 import {HeroSection} from '@/components/hero-section';
 import {MobileCarousel} from '@/components/mobile-carousel';
 import {SlideshowModal} from '@/components/slideshow-modal';
+import {useDirectusDetails} from '@/hooks/useDirectusDetails';
 import {useDirectusSections} from '@/hooks/useDirectusSections';
 import {transformDirectusSections} from '@/lib/transformers';
 
@@ -15,7 +16,8 @@ import {transformDirectusSections} from '@/lib/transformers';
 
 export default function App() {
   const [currentSlideshow, setCurrentSlideshow] = useState<string | null>(null);
-  const {data: directusSections, loading, error} = useDirectusSections();
+  const {data: directusSections, loading: sectionsLoading, error: sectionsError} = useDirectusSections();
+  const {data: siteDetails, loading: detailsLoading, error: detailsError} = useDirectusDetails();
 
   const openSlideshow = (sectionId: string) => {
     setCurrentSlideshow(sectionId);
@@ -26,7 +28,7 @@ export default function App() {
   };
 
   // Show loading state
-  if (loading) {
+  if (sectionsLoading || detailsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -38,7 +40,7 @@ export default function App() {
   }
 
   // Show error state
-  if (error || !directusSections) {
+  if (sectionsError || detailsError || !directusSections || !siteDetails) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md px-4">
@@ -60,8 +62,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <HeroSection sections={sections} />
-      <MobileCarousel />
+      <HeroSection sections={sections} siteDetails={siteDetails} />
+      <MobileCarousel siteDetails={siteDetails} />
       {sections.map((section, index) => {
         // Compute background gradient based on pattern
         let backgroundGradient =
@@ -85,8 +87,8 @@ export default function App() {
         );
       })}
       <AboutSection />
-      <ContactSection />
-      <Footer sections={sections} />
+      <ContactSection siteDetails={siteDetails} />
+      <Footer sections={sections} siteDetails={siteDetails} />
 
       {/* Slideshow Modal */}
       {currentSlideshow && (
