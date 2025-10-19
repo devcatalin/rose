@@ -1,4 +1,4 @@
-import {Clock, Facebook, Mail, MapPin, Phone} from 'lucide-react';
+import {Clock, Facebook, MapPin, Phone} from 'lucide-react';
 
 interface FooterProps {
   schedule?: string;
@@ -56,13 +56,6 @@ export function Footer({schedule, phoneNumber}: FooterProps) {
                   className="text-amber-200 hover:text-white transition-colors"
                 >
                   {phone}
-                </a>
-              </div>
-
-              <div className="flex items-center gap-3 justify-center md:justify-start">
-                <Mail className="w-5 h-5 text-amber-300" />
-                <a href="mailto:office@pizzagioco.ro" className="text-amber-200 hover:text-white transition-colors">
-                  office@pizzagioco.ro
                 </a>
               </div>
             </div>

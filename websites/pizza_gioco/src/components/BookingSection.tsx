@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {Calendar, Clock, Mail, Phone, Users} from 'lucide-react';
+import {Calendar, Clock, Phone, Users} from 'lucide-react';
 
 import {Button} from './ui/button';
 import {Card} from './ui/card';
@@ -8,7 +8,13 @@ import {Input} from './ui/input';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui/select';
 import {Textarea} from './ui/textarea';
 
-export function BookingSection() {
+interface BookingSectionProps {
+  phoneNumber?: string;
+}
+
+export function BookingSection({phoneNumber}: BookingSectionProps) {
+  const phone = phoneNumber || '0765 381 298';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -90,11 +96,9 @@ export function BookingSection() {
             <div className="space-y-2 md:space-y-3 flex flex-col items-center md:items-start">
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5" />
-                <span>0712 345 678</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5" />
-                <span>office@pizzagioco.ro</span>
+                <a href={`tel:+4${phone.replace(/\s/g, '')}`} className="hover:underline">
+                  {phone}
+                </a>
               </div>
             </div>
             <p className="mt-2 md:mt-4 text-amber-100 text-sm text-center md:text-left">

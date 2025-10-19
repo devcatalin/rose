@@ -119,7 +119,7 @@ export default function App() {
 
       <MenuSection menuItems={menuItems} categories={categories} />
       <AboutSection restaurantImage="https://images.unsplash.com/photo-1730020596764-2a51086abd49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjBwaXp6YSUyMHJlc3RhdXJhbnQlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NTgwMTI1NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080" />
-      <BookingSection />
+      <BookingSection phoneNumber={details?.phone_number} />
       <Footer schedule={details?.schedule} phoneNumber={details?.phone_number} />
     </div>
   );
