@@ -19,6 +19,6 @@ export function useDirectusSections() {
       'gallery.hortensia_gallery_id.*', // Get all gallery item fields
       'gallery.hortensia_gallery_id.image.*', // Get all gallery image fields
     ],
-    sort: ['id'],
+    sort: ['sort', 'id'], // Sort by the sort field first, then by id as fallback
   });
 }

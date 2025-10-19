@@ -112,43 +112,38 @@ export function ContentSection({
     </motion.div>
   );
 
-  // Check if this section needs special decorative elements
-  const needsDecorations = id && (id.includes('funerare') || id.includes('mireasa') || id.includes('buchete'));
-
   return (
-    <section id={id} className={`py-20 ${backgroundGradient} ${needsDecorations ? 'relative overflow-hidden' : ''}`}>
-      {/* Floating decorative elements - only for specific sections */}
-      {needsDecorations && (
-        <>
-          <motion.div
-            className="absolute top-16 left-12 w-16 h-16 bg-pink-200/30 rounded-full backdrop-blur-sm"
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute bottom-16 right-12 w-14 h-14 bg-green-300/25 rounded-full backdrop-blur-sm"
-            animate={{
-              y: [0, 18, 0],
-              opacity: [0.4, 0.7, 0.4],
-            }}
-            transition={{
-              duration: 4.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 2,
-            }}
-          />
-        </>
-      )}
+    <section id={id} className={`py-20 ${backgroundGradient} relative overflow-hidden`}>
+      {/* Floating decorative elements */}
+      <>
+        <motion.div
+          className="absolute top-16 left-12 w-16 h-16 bg-pink-200/30 rounded-full backdrop-blur-sm"
+          animate={{
+            y: [0, -20, 0],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute bottom-16 right-12 w-14 h-14 bg-green-300/25 rounded-full backdrop-blur-sm"
+          animate={{
+            y: [0, 18, 0],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 2,
+          }}
+        />
+      </>
 
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${needsDecorations ? 'relative z-10' : ''}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`grid ${gridCols} gap-16 items-center`}>
           {isImageLeft ? (
             <>

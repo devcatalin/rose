@@ -120,7 +120,7 @@ export function SlideshowModal({isOpen, onClose, images, sectionTitle}: Slidesho
             <>
               <motion.button
                 className={`absolute left-4 md:left-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 md:p-3 rounded-full border border-white/20 transition-all duration-200 z-50 ${
-                  images.length === 1 && sectionTitle !== 'Aranjamente Funerare' ? 'hidden md:block' : 'block'
+                  images.length === 1 ? 'hidden md:block' : 'block'
                 }`}
                 onClick={prevSlide}
                 whileHover={{scale: 1.1}}
@@ -134,7 +134,7 @@ export function SlideshowModal({isOpen, onClose, images, sectionTitle}: Slidesho
 
               <motion.button
                 className={`absolute right-4 md:right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 md:p-3 rounded-full border border-white/20 transition-all duration-200 z-50 ${
-                  images.length === 1 && sectionTitle !== 'Aranjamente Funerare' ? 'hidden md:block' : 'block'
+                  images.length === 1 ? 'hidden md:block' : 'block'
                 }`}
                 onClick={nextSlide}
                 whileHover={{scale: 1.1}}

@@ -64,28 +64,17 @@ export default function App() {
     <div className="min-h-screen overflow-x-hidden">
       <HeroSection sections={sections} siteDetails={siteDetails} />
       <MobileCarousel siteDetails={siteDetails} />
-      {sections.map((section, index) => {
-        // Compute background gradient based on pattern
-        let backgroundGradient =
-          index % 2 === 0 ? 'bg-white' : 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50';
-
-        // Special styling for funeral arrangements section
-        if (section.id.includes('funerare')) {
-          backgroundGradient = 'bg-gradient-to-br from-gray-50 to-white';
-        }
-
-        return (
-          <ContentSection
-            key={section.id}
-            {...section}
-            buttonText="Vezi mai multe poze"
-            imagePosition={index % 2 === 0 ? 'right' : 'left'}
-            backgroundGradient={backgroundGradient}
-            buttonSpacing={section.id.includes('funerare') ? 'normal' : 'extra'}
-            onClick={() => openSlideshow(section.id)}
-          />
-        );
-      })}
+      {sections.map((section, index) => (
+        <ContentSection
+          key={section.id}
+          {...section}
+          buttonText="Vezi mai multe poze"
+          imagePosition={index % 2 === 0 ? 'right' : 'left'}
+          backgroundGradient={index % 2 === 0 ? 'bg-white' : 'bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50'}
+          buttonSpacing="extra"
+          onClick={() => openSlideshow(section.id)}
+        />
+      ))}
       <AboutSection />
       <ContactSection siteDetails={siteDetails} />
       <Footer sections={sections} siteDetails={siteDetails} />
