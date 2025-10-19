@@ -9,8 +9,8 @@ import whiteRibbonBouquet from '@/assets/whiteRibbonBouquet.png';
 import {ImageWithFallback} from '@/components/figma/ImageWithFallback';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from '@/components/ui/sheet';
-import type {ContentSection} from '@/data/static/types';
 import type {HortensiaDetails} from '@/data/directus';
+import type {ContentSection} from '@/data/static/types';
 import {ChevronDown, Flower, Menu, MessageCircle, Phone, X} from 'lucide-react';
 import {motion} from 'motion/react';
 

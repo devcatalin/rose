@@ -1,5 +1,5 @@
-import type {ContentSection} from '@/data/static/types';
 import type {HortensiaDetails} from '@/data/directus';
+import type {ContentSection} from '@/data/static/types';
 import {Heart, MapPin, Phone} from 'lucide-react';
 import {motion} from 'motion/react';
 

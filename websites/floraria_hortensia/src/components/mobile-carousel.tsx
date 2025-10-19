@@ -1,7 +1,5 @@
 import {useEffect, useState} from 'react';
 
-import {ChevronLeft, ChevronRight} from 'lucide-react';
-
 import type {HortensiaDetails} from '@/data/directus';
 import {motion} from 'motion/react';
 

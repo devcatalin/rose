@@ -1,7 +1,5 @@
 import {useEffect, useState} from 'react';
 
-import {useDirectusItem} from './useDirectusItem';
-
 import type {HortensiaDetails} from '@/data/directus';
 import {directus} from '@/data/directus';
 import {readSingleton} from '@directus/sdk';
