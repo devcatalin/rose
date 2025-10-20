@@ -10,16 +10,16 @@ collections:
       archive_value: null
       collapse: open
       collection: gioco_details
-      color: null
+      color: '#92400E'
       display_template: null
       group: null
       hidden: false
-      icon: null
+      icon: restaurant
       item_duplication_fields: null
       note: null
       preview_url: null
       singleton: true
-      sort: null
+      sort: 7
       sort_field: null
       translations: null
       unarchive_value: null
@@ -34,16 +34,16 @@ collections:
       archive_value: null
       collapse: open
       collection: gioco_menu_categories
-      color: null
+      color: '#92400E'
       display_template: '{{category}}'
       group: null
       hidden: false
-      icon: null
+      icon: category
       item_duplication_fields: null
       note: Gioco Items
       preview_url: null
       singleton: false
-      sort: null
+      sort: 8
       sort_field: sort
       translations: null
       unarchive_value: null
@@ -58,16 +58,16 @@ collections:
       archive_value: null
       collapse: open
       collection: gioco_menu_items
-      color: null
+      color: '#92400E'
       display_template: null
       group: null
       hidden: false
-      icon: null
+      icon: restaurant_menu
       item_duplication_fields: null
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 9
       sort_field: null
       translations: null
       unarchive_value: null
@@ -91,7 +91,7 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 10
       sort_field: null
       translations: null
       unarchive_value: null
@@ -106,16 +106,16 @@ collections:
       archive_value: null
       collapse: open
       collection: gioco_offers
-      color: null
+      color: '#92400E'
       display_template: null
       group: null
       hidden: false
-      icon: null
+      icon: sell
       item_duplication_fields: null
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 11
       sort_field: sort
       translations: null
       unarchive_value: null
@@ -130,22 +130,46 @@ collections:
       archive_value: null
       collapse: open
       collection: gioco_sections
-      color: null
+      color: '#92400E'
       display_template: null
       group: null
       hidden: false
-      icon: null
+      icon: view_agenda
       item_duplication_fields: null
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 12
       sort_field: sort
       translations: null
       unarchive_value: null
       versioning: false
     schema:
       name: gioco_sections
+  - collection: gioco_share
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gioco_share
+      color: '#92400E'
+      display_template: null
+      group: null
+      hidden: false
+      icon: ios_share
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gioco_share
   - collection: hortensia_about
     meta:
       accountability: all
@@ -154,7 +178,7 @@ collections:
       archive_value: null
       collapse: open
       collection: hortensia_about
-      color: null
+      color: '#DB2777'
       display_template: '{{title}}'
       group: null
       hidden: false
@@ -178,7 +202,7 @@ collections:
       archive_value: null
       collapse: open
       collection: hortensia_details
-      color: null
+      color: '#DB2777'
       display_template: null
       group: null
       hidden: false
@@ -211,7 +235,7 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 13
       sort_field: null
       translations: null
       unarchive_value: null
@@ -226,7 +250,7 @@ collections:
       archive_value: null
       collapse: open
       collection: hortensia_gallery
-      color: null
+      color: '#DB2777'
       display_template: '{{description}}'
       group: null
       hidden: false
@@ -250,11 +274,11 @@ collections:
       archive_value: null
       collapse: open
       collection: hortensia_sections
-      color: null
+      color: '#DB2777'
       display_template: '{{title}}'
       group: null
       hidden: false
-      icon: view_module
+      icon: view_agenda
       item_duplication_fields: null
       note: null
       preview_url: null
@@ -283,13 +307,37 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: 5
+      sort: 6
       sort_field: null
       translations: null
       unarchive_value: null
       versioning: false
     schema:
       name: hortensia_sections_hortensia_gallery
+  - collection: hortensia_share
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: hortensia_share
+      color: '#DB2777'
+      display_template: null
+      group: null
+      hidden: false
+      icon: ios_share
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: 5
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: hortensia_share
 fields:
   - collection: gioco_details
     field: id
@@ -1412,6 +1460,164 @@ fields:
       has_auto_increment: false
       foreign_key_table: directus_files
       foreign_key_column: id
+  - collection: gioco_share
+    field: id
+    type: integer
+    meta:
+      collection: gioco_share
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gioco_share
+      data_type: integer
+      default_value: nextval('gioco_share_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_share
+    field: share_title
+    type: string
+    meta:
+      collection: gioco_share
+      conditions: null
+      display: null
+      display_options: null
+      field: share_title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: share_title
+      table: gioco_share
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_share
+    field: share_description
+    type: text
+    meta:
+      collection: gioco_share
+      conditions: null
+      display: null
+      display_options: null
+      field: share_description
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: share_description
+      table: gioco_share
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gioco_share
+    field: share_image
+    type: uuid
+    meta:
+      collection: gioco_share
+      conditions: null
+      display: null
+      display_options: null
+      field: share_image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options:
+        folder: a6c4180c-4ca8-48f8-b5e9-0baa20fdd743
+      readonly: false
+      required: true
+      sort: 4
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: share_image
+      table: gioco_share
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
   - collection: hortensia_about
     field: id
     type: integer
@@ -2457,6 +2663,164 @@ fields:
       has_auto_increment: false
       foreign_key_table: hortensia_gallery
       foreign_key_column: id
+  - collection: hortensia_share
+    field: id
+    type: integer
+    meta:
+      collection: hortensia_share
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: hortensia_share
+      data_type: integer
+      default_value: nextval('hortensia_share_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_share
+    field: share_title
+    type: string
+    meta:
+      collection: hortensia_share
+      conditions: null
+      display: null
+      display_options: null
+      field: share_title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: share_title
+      table: hortensia_share
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_share
+    field: share_description
+    type: text
+    meta:
+      collection: hortensia_share
+      conditions: null
+      display: null
+      display_options: null
+      field: share_description
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: share_description
+      table: hortensia_share
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: hortensia_share
+    field: share_image
+    type: uuid
+    meta:
+      collection: hortensia_share
+      conditions: null
+      display: null
+      display_options: null
+      field: share_image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options:
+        folder: 6a170a73-ecf7-4e26-b9e5-8577f9152e40
+      readonly: false
+      required: true
+      sort: 4
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: share_image
+      table: hortensia_share
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
 relations:
   - collection: gioco_menu_items
     field: image
@@ -2519,6 +2883,27 @@ relations:
       foreign_key_table: directus_files
       foreign_key_column: id
       constraint_name: gioco_sections_image_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: gioco_share
+    field: share_image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: gioco_share
+      many_field: share_image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: gioco_share
+      column: share_image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: gioco_share_share_image_foreign
       on_update: NO ACTION
       on_delete: SET NULL
   - collection: hortensia_details_hortensia_gallery
@@ -2645,5 +3030,26 @@ relations:
       foreign_key_table: hortensia_sections
       foreign_key_column: id
       constraint_name: hortensia_sections_hortensia_gallery_horte__22edefc3_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: hortensia_share
+    field: share_image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: hortensia_share
+      many_field: share_image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: hortensia_share
+      column: share_image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: hortensia_share_share_image_foreign
       on_update: NO ACTION
       on_delete: SET NULL
