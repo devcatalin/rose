@@ -65,12 +65,14 @@ export function Footer({schedule, phoneNumber}: FooterProps) {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Program</h4>
             <div className="space-y-2">
-              {scheduleLines.map((line, index) => (
-                <div key={index} className="flex items-center gap-2 justify-center md:justify-start">
-                  <Clock className="w-4 h-4 text-amber-300" />
-                  <span className="text-amber-200 text-sm">{line}</span>
-                </div>
-              ))}
+              {scheduleLines
+                .filter(l => l.trim() !== '')
+                .map((line, index) => (
+                  <div key={index} className="flex items-center gap-2 justify-center md:justify-start">
+                    <Clock className="w-4 h-4 text-amber-300" />
+                    <span className="text-amber-200 text-sm">{line}</span>
+                  </div>
+                ))}
             </div>
           </div>
 
@@ -109,7 +111,7 @@ export function Footer({schedule, phoneNumber}: FooterProps) {
 
         <div className="mt-12 pt-8 border-t border-amber-800 text-center">
           <p className="text-amber-300 text-sm md:text-base">© 2025 Pizza Gioco. Toate drepturile rezervate.</p>
-          <p className="text-amber-200 text-xs md:text-sm mt-2">Design made by Stoica Serena</p>
+          <p className="text-amber-200 text-xs md:text-sm mt-2">Designed by Stoica Serena</p>
         </div>
       </div>
     </footer>

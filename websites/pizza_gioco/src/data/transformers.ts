@@ -1,4 +1,4 @@
-import type {DirectusFile, GiocoMenuItem, GiocoOffer} from './directus';
+import type {DirectusFile, GiocoMenuItem, GiocoOffer, GiocoSection} from './directus';
 import type {MenuItem, Promotion} from './types';
 
 /**
@@ -69,4 +69,46 @@ export function transformDirectusOffer(offer: GiocoOffer): Promotion {
  */
 export function transformDirectusOffers(offers: GiocoOffer[]): Promotion[] {
   return offers.map(transformDirectusOffer);
+}
+
+/**
+ * Interface for transformed section data used by ContentSection component
+ */
+export interface TransformedSection {
+  id: number;
+  title: string;
+  description: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+  bulletPoints: {text: string}[];
+}
+
+/**
+ * Transform GiocoSection from Directus to TransformedSection for the app
+ */
+export function transformDirectusSection(section: GiocoSection): TransformedSection {
+  // Get the main image URL and description
+  const imageObj = typeof section.image === 'object' ? section.image : null;
+  const imageUrl = getImageUrl(section.image);
+  const imageAlt = imageObj?.title || imageObj?.description || section.title;
+
+  return {
+    id: section.id,
+    title: section.title,
+    description: section.description,
+    image: {
+      src: imageUrl,
+      alt: imageAlt,
+    },
+    bulletPoints: section.bulletPoints || [],
+  };
+}
+
+/**
+ * Transform an array of GiocoSection from Directus to TransformedSection array
+ */
+export function transformDirectusSections(sections: GiocoSection[]): TransformedSection[] {
+  return sections.map(transformDirectusSection);
 }

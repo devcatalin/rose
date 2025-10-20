@@ -95,14 +95,17 @@ export function BookingSection({phoneNumber}: BookingSectionProps) {
             <h3 className="text-xl font-semibold mb-2 md:mb-4 text-center md:text-left">Contact</h3>
             <div className="space-y-2 md:space-y-3 flex flex-col items-center md:items-start">
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5" />
-                <a href={`tel:+4${phone.replace(/\s/g, '')}`} className="hover:underline">
+                <Phone className="w-6 h-6" />
+                <a
+                  href={`tel:+4${phone.replace(/\s/g, '')}`}
+                  className="hover:underline text-2xl md:text-3xl font-bold"
+                >
                   {phone}
                 </a>
               </div>
             </div>
-            <p className="mt-2 md:mt-4 text-amber-100 text-sm text-center md:text-left">
-              Sună-ne direct pentru rezervări urgente sau întrebări specifice!
+            <p className="mt-2 md:mt-4 text-amber-100 text-base md:text-lg text-center md:text-left">
+              Sună-ne direct pentru rezervări!
             </p>
           </Card>
         </div>

@@ -41,12 +41,22 @@ export interface GiocoDetails {
   phone_number: string;
 }
 
+export interface GiocoSection {
+  id: number;
+  title: string;
+  description: string;
+  image: string | DirectusFile;
+  bulletPoints?: {text: string}[];
+  sort?: number;
+}
+
 // Define the complete schema for your Directus instance
 export interface DirectusSchema {
   gioco_menu_categories: GiocoMenuCategory[];
   gioco_menu_items: GiocoMenuItem[];
   gioco_offers: GiocoOffer[];
   gioco_details: GiocoDetails; // Singleton, not an array
+  gioco_sections: GiocoSection[];
 }
 
 // Get the Directus URL from environment variables or use a default

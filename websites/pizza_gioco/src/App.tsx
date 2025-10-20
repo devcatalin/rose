@@ -1,17 +1,28 @@
-import {AboutSection} from './components/AboutSection';
 import {BookingSection} from './components/BookingSection';
+import {ContentSection} from './components/ContentSection';
 import {Footer} from './components/Footer';
 import {Header} from './components/Header';
 import {MenuSection} from './components/MenuSection';
-import {useDirectusCategories, useDirectusDetails, useDirectusMenuItems, useDirectusOffers} from './hooks';
+import {transformDirectusSections} from './data/transformers';
+import {
+  useDirectusCategories,
+  useDirectusDetails,
+  useDirectusMenuItems,
+  useDirectusOffers,
+  useDirectusSections,
+} from './hooks';
 
 export default function App() {
   const {data: details, loading: detailsLoading} = useDirectusDetails();
   const {data: menuItems, loading: menuLoading} = useDirectusMenuItems();
   const {data: offers, loading: offersLoading} = useDirectusOffers();
   const {data: categories, loading: categoriesLoading} = useDirectusCategories();
+  const {data: sectionsData, loading: sectionsLoading} = useDirectusSections();
 
-  const loading = detailsLoading || menuLoading || offersLoading || categoriesLoading;
+  const loading = detailsLoading || menuLoading || offersLoading || categoriesLoading || sectionsLoading;
+
+  // Transform sections data
+  const sections = transformDirectusSections(sectionsData);
 
   if (loading) {
     return (
@@ -118,7 +129,21 @@ export default function App() {
       </section>
 
       <MenuSection menuItems={menuItems} categories={categories} />
-      <AboutSection restaurantImage="https://images.unsplash.com/photo-1730020596764-2a51086abd49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjBwaXp6YSUyMHJlc3RhdXJhbnQlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NTgwMTI1NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+
+      {/* Dynamic sections from Directus */}
+      {sections.map((section, index) => (
+        <ContentSection
+          key={section.id}
+          id={index === 0 ? 'about' : undefined}
+          title={section.title}
+          description={section.description}
+          image={section.image}
+          bulletPoints={section.bulletPoints}
+          imagePosition={index % 2 === 0 ? 'right' : 'left'}
+          backgroundColor={index % 2 === 0 ? 'white' : 'gray'}
+        />
+      ))}
+
       <BookingSection phoneNumber={details?.phone_number} />
       <Footer schedule={details?.schedule} phoneNumber={details?.phone_number} />
     </div>
