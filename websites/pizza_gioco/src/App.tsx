@@ -1,3 +1,5 @@
+import {Helmet} from 'react-helmet-async';
+
 import {BookingSection} from './components/BookingSection';
 import {ContentSection} from './components/ContentSection';
 import {Footer} from './components/Footer';
@@ -10,6 +12,7 @@ import {
   useDirectusMenuItems,
   useDirectusOffers,
   useDirectusSections,
+  useDirectusShare,
 } from './hooks';
 
 export default function App() {
@@ -18,11 +21,28 @@ export default function App() {
   const {data: offers, loading: offersLoading} = useDirectusOffers();
   const {data: categories, loading: categoriesLoading} = useDirectusCategories();
   const {data: sectionsData, loading: sectionsLoading} = useDirectusSections();
+  const {data: shareData} = useDirectusShare();
 
   const loading = detailsLoading || menuLoading || offersLoading || categoriesLoading || sectionsLoading;
 
   // Transform sections data
   const sections = transformDirectusSections(sectionsData);
+
+  // SEO defaults - fallback to Directus data when available
+  const directusUrl = import.meta.env.VITE_DIRECTUS_URL || 'https://cms.devcatalin.com';
+  const defaultTitle = 'Pizza Gioco';
+  const defaultDescription =
+    'Descoperă pizza autentică italiană la Pizza Gioco. Peste 16 ani de experiență, ingrediente proaspete și rețete tradiționale transmise din generație în generație.';
+  const defaultImageUrl = `${window.location.origin}/og-image-gioco.jpg`; // You can add this image later
+
+  const pageTitle = shareData?.share_title || defaultTitle;
+  const pageDescription = shareData?.share_description || defaultDescription;
+  const pageImage: string =
+    shareData?.share_image && typeof shareData.share_image === 'object'
+      ? `${directusUrl}/assets/${shareData.share_image.id}`
+      : typeof shareData?.share_image === 'string'
+        ? shareData.share_image
+        : defaultImageUrl;
 
   if (loading) {
     return (
@@ -39,6 +59,27 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <title>{pageTitle}</title>
+        <meta name="title" content={pageTitle} />
+        <meta name="description" content={pageDescription} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={pageImage} />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:title" content={pageTitle} />
+        <meta property="twitter:description" content={pageDescription} />
+        <meta property="twitter:image" content={pageImage} />
+      </Helmet>
+
       <Header promotions={offers} />
 
       {/* Hero Section */}

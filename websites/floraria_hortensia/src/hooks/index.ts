@@ -10,3 +10,4 @@ export {useDirectusItem} from './useDirectusItem';
 export {useDirectusSections} from './useDirectusSections';
 export {useDirectusDetails} from './useDirectusDetails';
 export {useDirectusAbout} from './useDirectusAbout';
+export {useDirectusShare} from './useDirectusShare';

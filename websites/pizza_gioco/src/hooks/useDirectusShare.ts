@@ -1,0 +1,63 @@
+import {useEffect, useState} from 'react';
+
+import type {GiocoShare} from '@/data/directus';
+import {directus} from '@/data/directus';
+import {readSingleton} from '@directus/sdk';
+
+interface UseDirectusShareResult {
+  data: GiocoShare | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<void>;
+}
+
+/**
+ * Custom hook to fetch the gioco_share singleton from Directus
+ * This singleton contains SEO/sharing metadata: title, description, and image
+ *
+ * @example
+ * ```tsx
+ * const { data: shareData, loading, error } = useDirectusShare();
+ * if (shareData) {
+ *   console.log(shareData.share_title);
+ *   console.log(shareData.share_description);
+ * }
+ * ```
+ */
+export function useDirectusShare(): UseDirectusShareResult {
+  const [data, setData] = useState<GiocoShare | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const result = await directus.request(
+        readSingleton('gioco_share', {
+          fields: ['id', 'share_title', 'share_description', 'share_image'],
+        })
+      );
+
+      setData(result as GiocoShare);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err : new Error('Failed to fetch gioco_share');
+      setError(errorMessage);
+      console.error('Error fetching gioco_share:', errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return {
+    data,
+    loading,
+    error,
+    refetch: fetchData,
+  };
+}

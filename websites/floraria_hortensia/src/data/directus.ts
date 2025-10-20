@@ -47,6 +47,13 @@ export interface HortensiaDetails {
   }[];
 }
 
+export interface HortensiaShare {
+  id: number;
+  share_title: string;
+  share_description: string;
+  share_image: string | DirectusFile;
+}
+
 // Define the complete schema for your Directus instance
 // Add new collections here as you create them in Directus
 export interface DirectusSchema {
@@ -54,6 +61,7 @@ export interface DirectusSchema {
   hortensia_gallery: HortensiaGallery[];
   hortensia_about: HortensiaAbout[];
   hortensia_details: HortensiaDetails; // Singleton, not an array
+  hortensia_share: HortensiaShare; // Singleton, not an array
   // Add more collections here as needed:
   // example_collection: ExampleType[];
 }

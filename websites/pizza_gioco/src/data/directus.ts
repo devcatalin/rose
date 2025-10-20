@@ -50,6 +50,13 @@ export interface GiocoSection {
   sort?: number;
 }
 
+export interface GiocoShare {
+  id: number;
+  share_title: string;
+  share_description: string;
+  share_image: string | DirectusFile;
+}
+
 // Define the complete schema for your Directus instance
 export interface DirectusSchema {
   gioco_menu_categories: GiocoMenuCategory[];
@@ -57,6 +64,7 @@ export interface DirectusSchema {
   gioco_offers: GiocoOffer[];
   gioco_details: GiocoDetails; // Singleton, not an array
   gioco_sections: GiocoSection[];
+  gioco_share: GiocoShare; // Singleton, not an array
 }
 
 // Get the Directus URL from environment variables or use a default

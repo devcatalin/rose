@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {Helmet} from 'react-helmet-async';
 
 import {AboutSection} from '@/components/about-section';
 import {ContactSection} from '@/components/contact-section';
@@ -10,6 +11,7 @@ import {SlideshowModal} from '@/components/slideshow-modal';
 import {transformDirectusSections} from '@/data/transformers';
 import {useDirectusDetails} from '@/hooks/useDirectusDetails';
 import {useDirectusSections} from '@/hooks/useDirectusSections';
+import {useDirectusShare} from '@/hooks/useDirectusShare';
 
 // Static data kept for reference in src/data/contentSections.ts
 // Website now uses data from Directus CMS
@@ -18,6 +20,7 @@ export default function App() {
   const [currentSlideshow, setCurrentSlideshow] = useState<string | null>(null);
   const {data: directusSections, loading: sectionsLoading, error: sectionsError} = useDirectusSections();
   const {data: siteDetails, loading: detailsLoading, error: detailsError} = useDirectusDetails();
+  const {data: shareData} = useDirectusShare();
 
   const openSlideshow = (sectionId: string) => {
     setCurrentSlideshow(sectionId);
@@ -60,8 +63,45 @@ export default function App() {
 
   const sections = transformDirectusSections(directusSections);
 
+  // SEO defaults - fallback to Directus data when available
+  const directusUrl = import.meta.env.VITE_DIRECTUS_URL || 'https://cms.devcatalin.com';
+  const defaultTitle = 'Florăria Hortensia';
+  const defaultDescription =
+    'Florăria Hortensia oferă aranjamente florale unice pentru orice ocazie. Flori proaspete și design personalizat pentru momentele tale speciale.';
+  const defaultImageUrl = `${window.location.origin}/og-image-hortensia.jpg`; // You can add this image later
+
+  const pageTitle = shareData?.share_title || defaultTitle;
+  const pageDescription = shareData?.share_description || defaultDescription;
+  const pageImage: string =
+    shareData?.share_image && typeof shareData.share_image === 'object'
+      ? `${directusUrl}/assets/${shareData.share_image.id}`
+      : typeof shareData?.share_image === 'string'
+        ? shareData.share_image
+        : defaultImageUrl;
+
   return (
     <div className="min-h-screen overflow-x-hidden">
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <title>{pageTitle}</title>
+        <meta name="title" content={pageTitle} />
+        <meta name="description" content={pageDescription} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={pageImage} />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:title" content={pageTitle} />
+        <meta property="twitter:description" content={pageDescription} />
+        <meta property="twitter:image" content={pageImage} />
+      </Helmet>
+
       <HeroSection sections={sections} siteDetails={siteDetails} />
       <MobileCarousel siteDetails={siteDetails} />
       {sections.map((section, index) => (
