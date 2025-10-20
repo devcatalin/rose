@@ -105,12 +105,6 @@ export function Header({promotions = []}: HeaderProps) {
               Meniu
             </button>
             <button
-              onClick={() => scrollToSection('about')}
-              className="text-gray-700 hover:text-amber-700 transition-colors font-medium"
-            >
-              Despre Noi
-            </button>
-            <button
               onClick={() => scrollToSection('booking')}
               className="text-gray-700 hover:text-amber-700 transition-colors font-medium"
             >
@@ -139,12 +133,6 @@ export function Header({promotions = []}: HeaderProps) {
                 className="text-center md:text-left text-gray-700 hover:text-amber-700 transition-colors font-medium"
               >
                 Meniu
-              </button>
-              <button
-                onClick={() => scrollToSection('about')}
-                className="text-center md:text-left text-gray-700 hover:text-amber-700 transition-colors font-medium"
-              >
-                Despre Noi
               </button>
               <button
                 onClick={() => scrollToSection('booking')}

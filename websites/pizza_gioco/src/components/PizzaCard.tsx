@@ -107,10 +107,10 @@ export function PizzaCard({
               {smallPrice && category.toLowerCase() === 'pizza' && (
                 <div className="flex items-center justify-start">
                   <span className="text-sm text-gray-600 text-[16px] md:text-[16px]">
-                    Mare: <span className="font-bold text-amber-800">{price} lei</span>
+                    Mare: <span className="font-bold text-amber-800">{price} Lei</span>
                   </span>
                   <span className="absolute bottom-0 right-0 text-sm text-gray-600 text-[16px] md:text-[16px] text-right">
-                    Mică: <span className="font-bold text-amber-800">{smallPrice} lei</span>
+                    Mică: <span className="font-bold text-amber-800">{smallPrice} Lei</span>
                   </span>
                 </div>
               )}
@@ -119,17 +119,11 @@ export function PizzaCard({
               {(!smallPrice || category.toLowerCase() !== 'pizza') && (
                 <div className="flex items-center gap-1.5">
                   {isPromotion && originalPrice && (
-                    <span className="text-gray-400 line-through text-sm">{originalPrice} lei</span>
+                    <span className="text-gray-400 line-through text-sm">{originalPrice} Lei</span>
                   )}
-                  {typeof price === 'string' ? (
-                    <span className="text-sm text-[rgba(123,51,6,1)] font-medium">{price}</span>
-                  ) : (
-                    <span
-                      className={`font-bold text-base md:text-lg ${isPromotion ? 'text-red-600' : 'text-amber-800'}`}
-                    >
-                      {price} lei
-                    </span>
-                  )}
+                  <span className={`font-bold text-base md:text-lg ${isPromotion ? 'text-red-600' : 'text-amber-800'}`}>
+                    {price} Lei
+                  </span>
                 </div>
               )}
             </div>

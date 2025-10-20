@@ -144,8 +144,8 @@ export default function App() {
         />
       ))}
 
-      <BookingSection phoneNumber={details?.phone_number} />
-      <Footer schedule={details?.schedule} phoneNumber={details?.phone_number} />
+      <BookingSection phoneNumber={details?.phone_number} schedule={details?.schedule} />
+      <Footer />
     </div>
   );
 }
