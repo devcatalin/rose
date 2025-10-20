@@ -4,7 +4,8 @@ set -euo pipefail
 cd /srv/rose/platform
 
 # Create snapshot using Directus CLI inside container
-docker compose exec -T cms npx directus schema snapshot --yes /tmp/snapshot.yaml
+# Use docker exec instead of docker compose exec to avoid TTY issues
+docker exec cms npx directus schema snapshot --yes /tmp/snapshot.yaml
 
 # Copy snapshot from container to host
 docker cp cms:/tmp/snapshot.yaml /tmp/snapshot.yaml
