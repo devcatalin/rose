@@ -26,25 +26,7 @@ fi
 
 # Step 1: Create snapshot on VPS
 echo -e "${YELLOW}1️⃣  Creating snapshot on VPS...${NC}"
-ssh -i "$SSH_KEY" "$VPS_USER@$VPS_HOST" << 'ENDSSH'
-    set -e
-    cd /srv/rose/platform
-    
-    # Create snapshot using Directus CLI inside container
-    docker compose exec -T cms npx directus schema snapshot --yes /tmp/snapshot.yaml
-    
-    # Copy snapshot from container to host
-    docker cp cms:/tmp/snapshot.yaml /tmp/snapshot.yaml
-    
-    # Verify the file exists and show its size
-    if [[ -f /tmp/snapshot.yaml ]]; then
-        ls -lh /tmp/snapshot.yaml
-        echo "✅ Snapshot created and copied to VPS host at /tmp/snapshot.yaml"
-    else
-        echo "❌ Failed to copy snapshot from container to host"
-        exit 1
-    fi
-ENDSSH
+ssh -i "$SSH_KEY" "$VPS_USER@$VPS_HOST" "bash /srv/rose/platform/scripts/create_snapshot_on_vps.sh"
 
 if [[ $? -ne 0 ]]; then
     echo -e "${RED}❌ Failed to create snapshot on VPS${NC}"
