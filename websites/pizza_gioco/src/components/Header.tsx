@@ -2,6 +2,8 @@ import {useState} from 'react';
 
 import {Menu, X} from 'lucide-react';
 
+import logo from '../assets/pizza_gioco_logo_transparent.png';
+
 import {ImageWithFallback} from './figma/ImageWithFallback';
 
 interface Promotion {
@@ -90,9 +92,7 @@ export function Header({promotions = []}: HeaderProps) {
       <nav className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">PG</span>
-            </div>
+            <img src={logo} alt="Pizza Gioco Logo" className="h-12 w-12 object-contain" />
             <h1 className="text-2xl font-bold text-amber-900">Pizza Gioco</h1>
           </div>
 

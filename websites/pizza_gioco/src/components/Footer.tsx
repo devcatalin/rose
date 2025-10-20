@@ -1,4 +1,6 @@
-import {Facebook} from 'lucide-react';
+import {Facebook, Heart} from 'lucide-react';
+
+import logo from '../assets/pizza_gioco_logo_transparent.png';
 
 export function Footer() {
   return (
@@ -7,9 +9,7 @@ export function Footer() {
         {/* Brand - Centered */}
         <div className="max-w-2xl mx-auto text-center space-y-4">
           <div className="flex items-center gap-2 justify-center">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-              <span className="text-amber-900 font-bold text-lg">PG</span>
-            </div>
+            <img src={logo} alt="Pizza Gioco Logo" className="h-12 w-12 object-contain" />
             <h3 className="text-2xl font-bold">Pizza Gioco</h3>
           </div>
 
@@ -28,7 +28,10 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-amber-800 text-center">
           <p className="text-amber-300 text-sm md:text-base">© 2025 Pizza Gioco. Toate drepturile rezervate.</p>
-          <p className="text-amber-200 text-xs md:text-sm mt-2">Designed by Stoica Serena</p>
+          <p className="text-amber-200 text-xs md:text-sm mt-2 flex items-center justify-center flex-wrap">
+            Făcut cu <Heart className="inline-block h-4 w-4 text-red-500 mx-1 fill-red-500" style={{margin: '0 4px'}} />{' '}
+            pentru iubitorii de pizza, designed by Serena Stoica
+          </p>
         </div>
       </div>
     </footer>

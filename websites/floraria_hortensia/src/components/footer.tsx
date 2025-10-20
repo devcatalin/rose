@@ -115,7 +115,8 @@ export function Footer({sections, siteDetails}: FooterProps) {
         >
           <p className="font-light">&copy; {currentYear} Florăria Hortensia. Toate drepturile rezervate.</p>
           <p className="text-sm mt-1 font-light">
-            Făcut cu <Heart className="inline h-4 w-4 text-pink-400 mx-1" /> pentru iubitorii de flori
+            Făcut cu <Heart className="inline h-4 w-4 text-pink-400 mx-1" /> pentru iubitorii de flori, designed by
+            Serena Stoica
           </p>
         </motion.div>
       </div>
